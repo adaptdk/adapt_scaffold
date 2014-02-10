@@ -147,7 +147,6 @@ class CreateClientDirCommand extends BaseCommand
         file_put_contents("$profile_path/$profile.install", $twig->render('profile/profile.install', $variables));
         file_put_contents("$profile_path/$profile.info", $twig->render('profile/profile.info', $variables));
         file_put_contents("$profile_path/$profile.make", $twig->render('profile/profile.make', $variables));
-        file_put_contents("$profile_path/includes/settings.inc", $twig->render('profile/includes/settings.inc', $variables));
         $this->git_init($gituri, $profile, $profile_path, $output);
 
         // Generate theme files and commit to git         
