@@ -104,7 +104,7 @@ class CreateClientDirCommand extends BaseCommand
           'description' => $description, 
           'projects' => $projects,
           'dependencies' => $dependencies,
-          'cron_key' => uniqid('cron-',TRUE),
+          'cron_key' => $this->generate_password('cron'),
         );
 
         // Create tmp folder for client dir
@@ -122,7 +122,7 @@ class CreateClientDirCommand extends BaseCommand
             'profile' => $profile,
             'database' => "${name}_${env}",
             'username' => "${name}_${env}",
-            'password' => uniqid('pw-',TRUE),
+            'password' => $this->generate_password('pw'),
             'hostname' => ($env == 'local' ? 'localhost' : 'some_server'),
           );
           file_put_contents("$site_path/{$env}.settings.php", $twig->render('platform/settings.php', $settings));
@@ -141,9 +141,16 @@ class CreateClientDirCommand extends BaseCommand
         
         // Generate profile files and commit to git         
         mkdir($profile_path);
+        
         mkdir("$profile_path/modules");
+        $this->executeExternalCommand("touch $profile_path/modules/.gitignore", $output);
+        
         mkdir("$profile_path/modules/custom");
+        $this->executeExternalCommand("touch $profile_path/modules/custom/.gitignore", $output);
+        
         mkdir("$profile_path/themes");
+        $this->executeExternalCommand("touch $profile_path/themes/.gitignore", $output);
+        
         file_put_contents("$profile_path/.gitignore", $twig->render('profile/gitignore', $variables));
         file_put_contents("$profile_path/$profile.profile", $twig->render('profile/profile.profile', $variables));
         file_put_contents("$profile_path/$profile.install", $twig->render('profile/profile.install', $variables));
@@ -161,7 +168,7 @@ class CreateClientDirCommand extends BaseCommand
         $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_platform.git $name </info>");     
     }
         
-    function git_init($gituri, $repo, $path, $output) {
+    protected function git_init($gituri, $repo, $path, $output) {
       $this->executeExternalCommand("cd $path; git init", $output);
       $this->executeExternalCommand("cd $path; git add .", $output);
       $this->executeExternalCommand("cd $path; git commit -m 'initial commit'", $output);
@@ -169,5 +176,10 @@ class CreateClientDirCommand extends BaseCommand
       $this->executeExternalCommand("cd $path; git push origin master", $output);
     }
     
+    protected function generate_password($prefix = '', $length = 20) {
+      $chars = "abcdefghjkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ23456789";
+      $password = substr( str_shuffle( $chars ), 0, $length );
+      return "$prefix-$password";
+    }
     
 }
