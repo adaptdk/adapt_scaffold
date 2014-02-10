@@ -2,6 +2,7 @@
 .DS_Store?
 .Spotlight-V100
 .Trashes
+.idea
 htdocs/*
 !htdocs/sites/
 htdocs/sites/all
