@@ -26,7 +26,7 @@ class CreateLocalRepoCommand extends BaseCommand
       $name     = $input->getArgument('name');
       $gitpath  = $config->git->local;
       $platform = "{$gitpath}/{$name}_platform.git";
-      $profile  = "{$gitpath}/{$name}_profile.git";
+      $profile  = "{$gitpath}/{$name}.git";
       $theme    = "{$gitpath}/{$name}_theme.git";
       
       if (is_dir($platform) || is_dir($profile)) {

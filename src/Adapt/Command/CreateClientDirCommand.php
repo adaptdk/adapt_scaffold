@@ -36,7 +36,7 @@ class CreateClientDirCommand extends BaseCommand
         }
 
         $name = $input->getArgument('name');
-        $profile = $name . '_profile';
+        $profile = $name;
         $theme = $name . '_theme';
         
         //if (is_dir($name)) {
@@ -152,7 +152,8 @@ class CreateClientDirCommand extends BaseCommand
 
         // Generate theme files and commit to git         
         mkdir($theme_path);
-        $this->executeExternalCommand("cp -r $template_path/theme $theme_path", $output);
+        $this->executeExternalCommand("cp -r $template_path/theme/ $theme_path", $output);
+        file_put_contents("$theme_path/{$profile_theme}.info", $twig->render("theme/theme.info", $variables));
         $this->git_init($gituri, $theme, $theme_path, $output);
 
         $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_platform.git $name </info>");     

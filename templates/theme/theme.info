@@ -1,5 +1,5 @@
-name        = theme
-description = Theme
+name        = {{ profile }}
+description = {{ profile }} theme
 screenshot  = screenshot.png
 
 core        = 7.x
