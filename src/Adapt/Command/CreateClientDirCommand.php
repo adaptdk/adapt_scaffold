@@ -165,6 +165,9 @@ class CreateClientDirCommand extends BaseCommand
         $this->executeExternalCommand("rm $theme_path/theme.info", $output);
         $this->git_init($gituri, $theme, $theme_path, $output);
 
+        // Cleanup
+        $this->executeExternalCommand("rm -fr $tmp_path", $output);
+
         $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_platform.git $name </info>");     
     }
         
