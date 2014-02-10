@@ -105,6 +105,8 @@ class CreateClientDirCommand extends BaseCommand
           'projects' => $projects,
           'dependencies' => $dependencies,
           'cron_key' => $this->generate_password('cron'),
+          'admin_name' => 'adaptadmin',
+          'admin_password' => $this->generate_password(),
         );
 
         // Create tmp folder for client dir
@@ -179,10 +181,10 @@ class CreateClientDirCommand extends BaseCommand
       $this->executeExternalCommand("cd $path; git push origin master", $output);
     }
     
-    protected function generate_password($prefix = '', $length = 20) {
+    protected function generate_password($prefix = FALSE, $length = 20) {
       $chars = "abcdefghjkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ23456789";
       $password = substr( str_shuffle( $chars ), 0, $length );
-      return "$prefix-$password";
+      return $prefix ? "$prefix-$password" : $password;
     }
     
 }
