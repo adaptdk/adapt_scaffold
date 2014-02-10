@@ -15,7 +15,7 @@ class CreateClientDirCommand extends BaseCommand
     protected function configure()
     {
         $this->setName('create-client-dir')
-            ->setDescription('Create a Adapt client dir')
+            ->setDescription('Create a Adapt project')
             ->addArgument('name', InputArgument::REQUIRED, 'The client-dir name')
             ->addOption('title', null, InputOption::VALUE_NONE, 'The title of the client-dir')
             ->addOption('description', null, InputOption::VALUE_NONE, 'The description of the client-dir')
@@ -140,11 +140,13 @@ class CreateClientDirCommand extends BaseCommand
         
         // Generate profile files and commit to git         
         mkdir($profile_path);
+        mkdir("$profile_path/includes");
         file_put_contents("$profile_path/.gitignore", $twig->render('profile/gitignore', $variables));
         file_put_contents("$profile_path/$profile.profile", $twig->render('profile/profile.profile', $variables));
         file_put_contents("$profile_path/$profile.install", $twig->render('profile/profile.install', $variables));
         file_put_contents("$profile_path/$profile.info", $twig->render('profile/profile.info', $variables));
         file_put_contents("$profile_path/$profile.make", $twig->render('profile/profile.make', $variables));
+        file_put_contents("$profile_path/includes/settings.php", $twig->render('profile/includes/settings.php', $variables));
         $this->git_init($gituri, $profile, $profile_path, $output);
 
         $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_config.git $name </info>");

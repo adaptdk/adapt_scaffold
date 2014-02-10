@@ -1,0 +1,41 @@
+{
+  "git" : {
+    "remote" : "git@githost:/home/tom/test",
+    "local"  : "file:///tmp"
+  },
+  "modules" : {
+    "default" : {
+      "core" : [
+        { "name" : "block" },
+        { "name" : "contextual" },
+        { "name" : "dblog" },
+        { "name" : "field" },
+        { "name" : "field_sql_storage" },
+        { "name" : "field_ui" },
+        { "name" : "file" },
+        { "name" : "filter" },
+        { "name" : "image" },
+        { "name" : "list" },
+        { "name" : "locale" },
+        { "name" : "menu" },
+        { "name" : "node" },
+        { "name" : "number" },
+        { "name" : "options" },
+        { "name" : "path" },
+        { "name" : "rdf" },
+        { "name" : "system" },
+        { "name" : "taxonomy" },
+        { "name" : "text" },
+        { "name" : "update" },
+        { "name" : "user" }
+      ],
+      "adapt" : [
+        { "name" : "adapt_core" },
+        { "name" : "adapt_media" },
+        { "name" : "adapt_wysiwyg" }
+      ],
+      "projects" : [],
+      "submodules" : []
+    }
+  }
+}

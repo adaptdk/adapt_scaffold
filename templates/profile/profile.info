@@ -7,6 +7,11 @@ core = 7.x
 dependencies[] = {{ dependency.name }}
 {% endfor %}
 
+; Adapt install module dependencies
+{% for dependency in dependencies.adapt %}
+dependencies[] = {{ dependency.name }}
+{% endfor %}
+
 ; Project dependencies
 {% for dependency in dependencies.projects %}
 dependencies[] = {{ dependency.name }}

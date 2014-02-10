@@ -8,10 +8,15 @@
  * Implements hook_install().
  */
 function {{ profile }}_install() {
+ 
+   // Import variable settings
+  $profile_path = drupal_get_path('profile', '{{ profile }}');
+  require($profile_path . "/includes/settings.inc");
+ 
   // We use seven as our admin theme.
-  theme_enable(array('seven'));
+  theme_enable(array($admin_theme));
   $variables = array(
-    'admin_theme' => 'seven'
+    'admin_theme' => $admin_theme
   );
   foreach ($variables as $key => $variable) {
     variable_set($key, $variable);
