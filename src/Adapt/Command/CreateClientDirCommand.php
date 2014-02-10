@@ -28,7 +28,7 @@ class CreateClientDirCommand extends BaseCommand
 
         $config = json_decode(file_get_contents(__DIR__ . '../../../../config.json'));
         
-        $gituri = $config->git->local;
+        $gituri = 'file://' . $config->git->local;
         $remote_git = $input->getOption('remote-git');
         $tmp_path = '/tmp/' . uniqid();
 
@@ -69,8 +69,8 @@ class CreateClientDirCommand extends BaseCommand
         $release = $fetcher->getReleaseInfo('drupal', '7.x')->getCurrentRelease();
         $drupal_core_version = "{$release['major']}.{$release['patch']}";
 
-        $profile_path = "$tmp_path/profile";
-        $config_path = "$tmp_path/config";
+        $profile_path  = "$tmp_path/profile";
+        $platform_path = "$tmp_path/platform";
 
         $projects = array();
         $dependencies = array();  
@@ -109,11 +109,11 @@ class CreateClientDirCommand extends BaseCommand
         // Create tmp folder for client dir
         mkdir($tmp_path);
         
-        // Generate config files and commit to git
-        mkdir($config_path);
-        file_put_contents("$config_path/.gitignore", $twig->render('gitignore', $variables));
+        // Generate platform files and commit to git
+        mkdir($platform_path);
+        file_put_contents("$platform_path/.gitignore", $twig->render('gitignore', $variables));
         
-        $site_path = "$config_path/htdocs/sites/default/";
+        $site_path = "$platform_path/htdocs/sites/default/";
         mkdir($site_path,0775,TRUE);
         
         foreach (array('local','dev','test','live') as $env) { 
@@ -126,17 +126,17 @@ class CreateClientDirCommand extends BaseCommand
           );
           file_put_contents("$site_path/{$env}.settings.php", $twig->render('settings.php', $settings));
           if ($env == 'local') {
-            file_put_contents("$config_path/local_setup.sh", $twig->render('local_setup.sh', $settings));
-            $this->executeExternalCommand("chmod +x $config_path/local_setup.sh", $output);
+            file_put_contents("$platform_path/local_setup.sh", $twig->render('local_setup.sh', $settings));
+            $this->executeExternalCommand("chmod +x $platform_path/local_setup.sh", $output);
           }
         }
  
-        file_put_contents("$config_path/platform.make", $twig->render('platform.make', $variables));
-        file_put_contents("$config_path/build.sh", $twig->render('build.sh', $variables));
-        $this->executeExternalCommand("chmod +x $config_path/build.sh", $output);
-        file_put_contents("$config_path/install.sh", $twig->render('install.sh', $variables));
-        $this->executeExternalCommand("chmod +x $config_path/install.sh", $output);
-        $this->git_init($gituri, $name . '_config', $config_path, $output);
+        file_put_contents("$platform_path/platform.make", $twig->render('platform.make', $variables));
+        file_put_contents("$platform_path/build.sh", $twig->render('build.sh', $variables));
+        $this->executeExternalCommand("chmod +x $platform_path/build.sh", $output);
+        file_put_contents("$platform_path/install.sh", $twig->render('install.sh', $variables));
+        $this->executeExternalCommand("chmod +x $platform_path/install.sh", $output);
+        $this->git_init($gituri, $name . '_platform', $platform_path, $output);
         
         // Generate profile files and commit to git         
         mkdir($profile_path);
@@ -149,7 +149,7 @@ class CreateClientDirCommand extends BaseCommand
         file_put_contents("$profile_path/includes/settings.php", $twig->render('profile/includes/settings.php', $variables));
         $this->git_init($gituri, $profile, $profile_path, $output);
 
-        $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_config.git $name </info>");
+        $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_platform.git $name </info>");
            
     }
         

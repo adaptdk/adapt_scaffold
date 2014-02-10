@@ -1,7 +1,7 @@
 {
   "git" : {
     "remote" : "git@githost:/home/tom/test",
-    "local"  : "file:///tmp"
+    "local"  : "/tmp/git"
   },
   "modules" : {
     "default" : {
