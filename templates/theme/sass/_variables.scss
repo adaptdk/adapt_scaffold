@@ -1,0 +1,14 @@
+$red: #CB4043;
+$gray: #DADADA;
+$body-color: #fff;
+$text-color: #333;
+$width: 1200;
+$content-width: $width * 1px;
+$border-radius: 4px;
+$border-width: 1px;
+$border-color: $gray;
+
+/* GRIDS */
+$grids: 12;
+$gutters-in-px: 20; //px
+$gutters: $gutters-in-px/(($width - (11*$gutters-in-px))/$grids);

@@ -1,0 +1,40 @@
+.element-invisible {
+  display: none;
+}
+
+* {
+  @include box-sizing(border-box);
+  @include font;
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  height: 100%;
+}
+body {
+  background: #fff;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+h1 {
+}
+h2 {
+}
+h3 {
+}
+p {
+  margin-bottom: 20px;
+}
+
+.content {
+  ul, ol {
+    margin-left: 20px;
+  }
+}

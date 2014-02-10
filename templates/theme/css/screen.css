@@ -1,0 +1,75 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+/* GRIDS */
+/* MEDIA QUERIES */
+/* GRADIENTS */
+/* FONTS */
+/* FORM ELEMENTS */
+.element-invisible { display: none; }
+
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-family: 'Open Sans', sans-serif; color: #333333; font-size: 13px; font-weight: 400; margin: 0px; padding: 0px; }
+
+html { height: 100%; }
+
+body { background: #fff; height: 100%; }
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+p { margin-bottom: 20px; }
+
+.content ul, .content ol { margin-left: 20px; }
+
+.form-required { color: #cb4043; }
+
+.form-item { margin-bottom: 10px; }
+
+input.form-text { -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; background: #fff; border: 1px solid #dadada; width: 230px; height: 32px; padding: 0 10px; }
+input.form-submit { -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; background: #fff; cursor: pointer; height: 32px; line-height: 32px; padding: 0 15px; border: 0; color: #fff; }
+
+#user-login label { float: left; display: block; width: 100px; line-height: 32px; }
+
+/* HEADER */
+.page-wrapper { /* for IE 6/7 */ *zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).style.cssText="clear:both;font:0/0 serif"); /* non-JS fallback */ *zoom: 1; }
+.page-wrapper:before, .page-wrapper:after { content: "."; display: block; height: 0; overflow: hidden; }
+.page-wrapper:after { clear: both; }
+
+#main { padding: 20px 0; }
+@media screen and (min-height: 500px) { #main { padding-bottom: 200px; } }
+.not-front #main > div { margin: 0 auto; width: 1200px; }
+@media screen and (max-width: 945px) { .not-front #main > div { width: 100%; padding: 0 10px; } }
+@media screen and (max-width: 700px) { .not-front #main > div { width: 100%; padding: 0; } }
+
+.onecol { /* for IE 6/7 */ *zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).style.cssText="clear:both;font:0/0 serif"); /* non-JS fallback */ *zoom: 1; margin: 0 auto; width: 1200px; margin-bottom: 20px; }
+.onecol:before, .onecol:after { content: "."; display: block; height: 0; overflow: hidden; }
+.onecol:after { clear: both; }
+@media screen and (max-width: 945px) { .onecol { width: 100%; padding: 0 10px; } }
+@media screen and (max-width: 700px) { .onecol { width: 100%; padding: 0; } }
+
+.twocol-left { /* for IE 6/7 */ *zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).style.cssText="clear:both;font:0/0 serif"); /* non-JS fallback */ *zoom: 1; margin: 0 auto; width: 1200px; }
+.twocol-left:before, .twocol-left:after { content: "."; display: block; height: 0; overflow: hidden; }
+.twocol-left:after { clear: both; }
+@media screen and (max-width: 945px) { .twocol-left { width: 100%; padding: 0 10px; } }
+@media screen and (max-width: 700px) { .twocol-left { width: 100%; padding: 0; } }
+.twocol-left > .col1 { width: 23.75%; float: left; margin-right: -100%; margin-left: 0%; clear: none; }
+.twocol-left > .col2 { width: 74.58333%; float: right; margin-left: 0; margin-right: 0; clear: none; }
+
+.twocol-right { /* for IE 6/7 */ *zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).style.cssText="clear:both;font:0/0 serif"); /* non-JS fallback */ *zoom: 1; margin: 0 auto; width: 1200px; }
+.twocol-right:before, .twocol-right:after { content: "."; display: block; height: 0; overflow: hidden; }
+.twocol-right:after { clear: both; }
+@media screen and (max-width: 945px) { .twocol-right { width: 100%; padding: 0 10px; } }
+@media screen and (max-width: 700px) { .twocol-right { width: 100%; padding: 0; } }
+.twocol-right > .col1 { width: 74.58333%; float: left; margin-right: -100%; margin-left: 0%; clear: none; }
+.twocol-right > .col2 { width: 23.75%; float: right; margin-left: 0; margin-right: 0; clear: none; }
+
+.threecol { /* for IE 6/7 */ *zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).style.cssText="clear:both;font:0/0 serif"); /* non-JS fallback */ *zoom: 1; margin: 0 auto; width: 1200px; }
+.threecol:before, .threecol:after { content: "."; display: block; height: 0; overflow: hidden; }
+.threecol:after { clear: both; }
+@media screen and (max-width: 945px) { .threecol { width: 100%; padding: 0 10px; } }
+@media screen and (max-width: 700px) { .threecol { width: 100%; padding: 0; } }
+.threecol > .col1 { width: 23.75%; float: left; margin-right: -100%; margin-left: 0%; clear: none; }
+.threecol > .col2 { width: 49.16667%; float: left; margin-right: -100%; margin-left: 25.41667%; clear: none; }
+.threecol > .col3 { width: 23.75%; float: right; margin-left: 0; margin-right: 0; clear: none; }
+
+.pager { clear: both; text-align: center; }
+.pager li { background-image: none; display: inline; list-style-type: none; padding: 0.5em; }
+.pager li.current { font-weight: 700; }

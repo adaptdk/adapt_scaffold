@@ -1,0 +1,25 @@
+name        = theme
+description = Theme
+screenshot  = screenshot.png
+
+core        = 7.x
+engine      = phptemplate
+base theme  = basetheme
+
+; Regions =====================================================================
+
+;regions[content] = Content
+
+; Stylesheets =================================================================
+
+stylesheets[all][] = css/screen.css
+
+
+; Scripts =====================================================================
+
+; scripts[] = js/modernizr.js
+; scripts[] = js/jquery.placeholder.min.js
+; scripts[] = js/main.js
+
+; Panels layouts. You can place multiple layouts under the "layouts" folder.
+plugins[panels][layouts] = templates/layouts

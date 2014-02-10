@@ -1,0 +1,22 @@
+.form-required {
+  color: $red;
+}
+.form-item {
+  margin-bottom: 10px;
+}
+input {
+  &.form-text {
+    @include form-text;
+  }
+  &.form-submit {
+    @include submit;
+  }
+}
+#user-login {
+  label {
+    float: left;
+    display: block;
+    width: 100px;
+    line-height: 32px;
+  }
+}

@@ -1,0 +1,52 @@
+.page-wrapper {
+  @include clearfix;
+}
+#main {
+  padding: 20px 0;
+  @media screen and (min-height: 500px) {
+    padding-bottom: 200px;
+  }
+  > div {
+    .not-front & {
+      @include content;
+    }
+  }
+}
+.onecol {
+  @include clearfix;
+  @include content;
+  margin-bottom: 20px;
+}
+.twocol-left {
+  @include clearfix;
+  @include content;
+  > .col1 {
+    @include grid-span(3, 1);
+  }
+  > .col2 {
+    @include grid-span(9, 4);
+  }
+}
+.twocol-right {
+  @include clearfix;
+  @include content;
+  > .col1 {
+    @include grid-span(9, 1);
+  }
+  > .col2 {
+    @include grid-span(3, 10);
+  }
+}
+.threecol {
+  @include clearfix;
+  @include content;
+  > .col1 {
+    @include grid-span(3, 1);
+  }
+  > .col2 {
+    @include grid-span(6, 4);
+  }
+  > .col3 {
+    @include grid-span(3,10);
+  }
+}
