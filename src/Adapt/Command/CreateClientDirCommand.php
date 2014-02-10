@@ -141,7 +141,9 @@ class CreateClientDirCommand extends BaseCommand
         
         // Generate profile files and commit to git         
         mkdir($profile_path);
-        mkdir("$profile_path/includes");
+        mkdir("$profile_path/modules");
+        mkdir("$profile_path/modules/custom");
+        mkdir("$profile_path/themes");
         file_put_contents("$profile_path/.gitignore", $twig->render('profile/gitignore', $variables));
         file_put_contents("$profile_path/$profile.profile", $twig->render('profile/profile.profile', $variables));
         file_put_contents("$profile_path/$profile.install", $twig->render('profile/profile.install', $variables));
