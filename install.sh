@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-if pushd "htdocs/sites/default" > /dev/null; then
-  drush sql-drop -y
-  drush site-install {{ profile }} --site-name="{{ title }}" -y
-  drush vset cron_key "{{ cron_key }}"
-fi
+curl -s getcomposer.org/installer | php -d detect_unicode=Off -d date.timezone=UTC
+
+./composer.phar install
+
+printf '\n \033[0;32m%s\033[0m\n' '.... scaffold.php is now ready.'
