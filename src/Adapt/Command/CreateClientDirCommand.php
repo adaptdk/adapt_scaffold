@@ -131,10 +131,10 @@ class CreateClientDirCommand extends BaseCommand
           }
         }
  
-        file_put_contents("$platform_path/platform.make", $twig->render('platform.make', $variables));
-        file_put_contents("$platform_path/build.sh", $twig->render('build.sh', $variables));
+        file_put_contents("$platform_path/platform.make", $twig->render('platform/platform.make', $variables));
+        file_put_contents("$platform_path/build.sh", $twig->render('platform/build.sh', $variables));
         $this->executeExternalCommand("chmod +x $platform_path/build.sh", $output);
-        file_put_contents("$platform_path/install.sh", $twig->render('install.sh', $variables));
+        file_put_contents("$platform_path/install.sh", $twig->render('platform/install.sh', $variables));
         $this->executeExternalCommand("chmod +x $platform_path/install.sh", $output);
         $this->git_init($gituri, $name . '_platform', $platform_path, $output);
         
