@@ -1,0 +1,19 @@
+{
+    "name": "Adapt scaffold",
+    "description": "Tools to create new Drupal projects",
+    "authors": [
+        {
+            "name": "Tom Helmer Hansen",
+            "email": "tom@adapt.dk"
+        }
+    ],
+    "require": {
+      "twig/twig": "1.*",
+      "symfony/console": "2.*",
+      "symfony/process": "2.*",
+      "fabsor/drupal-release-api": "dev-master"
+    },
+    "autoload": {
+      "psr-0": { "Adapt": "src/" }
+    }
+}

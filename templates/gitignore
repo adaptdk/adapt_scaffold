@@ -1,0 +1,12 @@
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+htdocs/*
+!htdocs/sites/
+htdocs/sites/all
+htdocs/sites/README.txt
+htdocs/sites/example.sites.php
+htdocs/sites/**/settings.php
+htdocs/sites/**/files
+htdocs/sites/**/private
