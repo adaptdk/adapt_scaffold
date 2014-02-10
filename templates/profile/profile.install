@@ -15,6 +15,6 @@ function {{ profile }}_install() {
 
   // Enable the profile specific theme.
   theme_enable(array('{{ profile }}_theme'));
-  variable_set('theme_default', '{{ profile }}_theme';
+  variable_set('theme_default', '{{ profile }}_theme');
   
 }
