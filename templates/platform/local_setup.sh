@@ -5,6 +5,6 @@ mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON {{ database }}.* TO '{{ username
 if pushd "htdocs/sites/default" > /dev/null; then
   ln -s local.settings.php settings.php
   mkdir files
-  chown www:everyone files
-  chmod 775 files
+  sudo chown www:everyone files
+  sudo chmod 775 files
 fi

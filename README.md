@@ -29,5 +29,26 @@ By default local repositories are made in /tmp/git, you can change this is the c
     
 ## Create the client-dir
 
-    scaffold create-client-dir hejsan
-   
+    scaffold create-client-dir <client-dir>
+
+# Checkout repository
+Check the platform repo out as <client-dir> or whatever you vagrant magic want it to be called.
+
+    git clone file:///tmp/git/<client-dir>_platform.git <client-dir>
+
+# Create local database
+You can create a local database with vagrant or this command:
+
+    cd <client-dir-folder>
+    ./local_setup.sh
+    
+# Build
+
+    cd <client-dir-folder>
+    ./build.sh
+
+# Install
+
+    cd <client-dir-folder>
+    ./install.sh
+
