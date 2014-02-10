@@ -3,3 +3,18 @@
  * @file
  * Example install file.
  */
+ 
+ 
+ /**
+ * Implements hook_install().
+ */
+function {{ profile }}_install() {
+
+  // Disable bartik theme.
+  theme_disable(array('bartik'));  
+
+  // Enable the profile specific theme.
+  theme_enable(array('{{ profile }}_theme'));
+  variable_set('theme_default', '{{ profile }}_theme';
+  
+}
