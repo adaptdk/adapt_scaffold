@@ -25,6 +25,7 @@ class CreateClientDirCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $config = json_decode(file_get_contents(__DIR__ . '../../../../config.json'));
+        $template_path = __DIR__ . '/../../../templates';
         
         $gituri = 'file://' . $config->git->local;
         $remote_git = $input->getOption('remote-git');
@@ -124,7 +125,7 @@ class CreateClientDirCommand extends BaseCommand
             'password' => uniqid('pw-',TRUE),
             'hostname' => ($env == 'local' ? 'localhost' : 'some_server'),
           );
-          file_put_contents("$site_path/{$env}.settings.php", $twig->render('/platform/settings.php', $settings));
+          file_put_contents("$site_path/{$env}.settings.php", $twig->render('platform/settings.php', $settings));
           if ($env == 'local') {
             file_put_contents("$platform_path/local_setup.sh", $twig->render('platform/local_setup.sh', $settings));
             $this->executeExternalCommand("chmod +x $platform_path/local_setup.sh", $output);
@@ -151,6 +152,7 @@ class CreateClientDirCommand extends BaseCommand
 
         // Generate theme files and commit to git         
         mkdir($theme_path);
+        $this->executeExternalCommand("cp -r $template_path/theme $theme_path", $output);
         $this->git_init($gituri, $theme, $theme_path, $output);
 
         $output->writeln("<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_platform.git $name </info>");     
