@@ -35,6 +35,13 @@ projects[adapt_wysiwyg][download][type] = 'git'
 projects[adapt_wysiwyg][download][url] = 'http://github.com/adaptdk/adapt_wysiwyg.git'
 ; projects[adapt_wysiwyg][download][tag] = '0.1'
 
+; Adapt Permissions
+projects[adapt_permissions][type] = 'module'
+projects[adapt_permissions][subdir] = 'global'
+projects[adapt_permissions][download][type] = 'git'
+projects[adapt_permissions][download][url] = 'http://github.com/adaptdk/adapt_permissions.git'
+; projects[adapt_permissions][download][tag] = '0.1'
+
 ; Adapt Basetheme
 projects[adapt_basetheme][type] = 'theme'
 projects[adapt_basetheme][subdir] = 'global'
