@@ -47,7 +47,7 @@ projects[adapt_basetheme][type] = 'theme'
 projects[adapt_basetheme][subdir] = 'global'
 projects[adapt_basetheme][download][type] = 'git'
 projects[adapt_basetheme][download][url] = 'http://github.com/adaptdk/adapt_basetheme.git'
-projects[adapt_basetheme][download][tag] = '0.1'
+projects[adapt_basetheme][download][tag] = '0.2'
 
 ; {{ profile }} theme
 projects[{{ profile }}_theme][type] = 'theme'
