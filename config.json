@@ -1,6 +1,6 @@
 {
   "git" : {
-    "remote" : "git@githost:/home/tom/test",
+    "remote" : "git@githost:/data/git",
     "local"  : "/tmp/git"
   },
   "modules" : {
