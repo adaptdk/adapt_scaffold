@@ -26,7 +26,7 @@ projects[adapt_media][type] = 'module'
 projects[adapt_media][subdir] = 'global'
 projects[adapt_media][download][type] = 'git'
 projects[adapt_media][download][url] = 'http://github.com/adaptdk/adapt_media.git'
-projects[adapt_media][download][tag] = '0.1'
+projects[adapt_media][download][tag] = '0.2'
 
 ; Adapt Wysiwyg
 projects[adapt_wysiwyg][type] = 'module'
