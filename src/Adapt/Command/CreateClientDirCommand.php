@@ -163,6 +163,8 @@ class CreateClientDirCommand extends BaseCommand
         // Generate theme files and commit to git         
         mkdir($theme_path);
         $this->executeExternalCommand("cp -r $template_path/theme/ $theme_path", $output);
+        // The .gitignore file is named gitignore to make sure it's not active in the scaffold repo
+        $this->executeExternalCommand("mv $theme_path/gitignore $theme_path/.gitignore", $output);
         file_put_contents("$theme_path/{$profile}_theme.info", $twig->render("theme/theme.info", $variables));
         $this->executeExternalCommand("rm $theme_path/theme.info", $output);
         $this->git_init($gituri, $theme, $theme_path, $output);
