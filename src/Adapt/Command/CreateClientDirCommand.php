@@ -11,26 +11,23 @@ use Fabsor\DrupalReleaseApi\HTTPReleaseFetcher;
  * Command for creating Adapt client dirs.
  */
 class CreateClientDirCommand extends BaseCommand {
+
+  var $twig;
+  var $gituri;
+
   protected function configure() {
     $this->setName('create-client-dir')
          ->setDescription('Create a Adapt project')
          ->addArgument('name', InputArgument::REQUIRED, 'The client-dir name')
-         ->addOption('title', NULL, InputOption::VALUE_NONE, 'The title of the client-dir')
-         ->addOption('description', NULL, InputOption::VALUE_NONE, 'The description of the client-dir')
+         ->addOption('title', NULL, InputOption::VALUE_OPTIONAL, 'The title of the client-dir')
+         ->addOption('description', NULL, InputOption::VALUE_OPTIONAL, 'The description of the client-dir')
          ->addOption('remote-git', NULL, InputOption::VALUE_NONE, "Initialize remote git repository");
   }
 
   protected function execute(InputInterface $input, OutputInterface $output) {
     $config = json_decode(file_get_contents(__DIR__ . '../../../../config.json'));
-    $template_path = __DIR__ . '/../../../templates';
 
-    $gituri = 'file://' . $config->git->local;
-    $remote_git = $input->getOption('remote-git');
     $tmp_path = '/tmp/' . uniqid();
-
-    if ($remote_git) {
-      $gituri = $config->git->remote;
-    }
 
     $name = $input->getArgument('name');
     $profile = $name;
@@ -60,7 +57,13 @@ class CreateClientDirCommand extends BaseCommand {
       $description = $name;
     }
 
-    $twig = $this->getTwig();
+    $gituri = 'file://' . $config->git->local;
+    $remote_git = $input->getOption('remote-git');
+    if ($remote_git) {
+      $gituri = $config->git->remote;
+    }
+
+    $this->twig = $this->getTwig();
 
     $fetcher = new HTTPReleaseFetcher();
     $release = $fetcher->getReleaseInfo('drupal', '7.x')->getCurrentRelease();
@@ -95,6 +98,7 @@ class CreateClientDirCommand extends BaseCommand {
 
     $variables = array(
       'drupal_core_version' => $drupal_core_version,
+      'name' => $name,
       'gituri' => $gituri,
       'profile' => $profile,
       'title' => $title,
@@ -110,60 +114,15 @@ class CreateClientDirCommand extends BaseCommand {
     mkdir($tmp_path);
 
     // Generate platform files and commit to git
-    mkdir($platform_path);
-    file_put_contents("$platform_path/.gitignore", $twig->render('platform/gitignore', $variables));
-
-    $site_path = "$platform_path/htdocs/sites/default/";
-    mkdir($site_path, 0775, TRUE);
-
-    foreach (array('local', 'dev', 'test', 'live') as $env) {
-      $settings = array(
-        'profile' => $profile,
-        'database' => "${name}_${env}",
-        'username' => "${name}_${env}",
-        'password' => $this->generate_password('pw'),
-        'hostname' => ($env == 'local' ? 'localhost' : 'some_server'),
-      );
-      file_put_contents("$site_path/{$env}.settings.php", $twig->render('platform/settings.php', $settings));
-      if ($env == 'local') {
-        file_put_contents("$platform_path/local_setup.sh", $twig->render('platform/local_setup.sh', $settings));
-        $this->executeExternalCommand("chmod +x $platform_path/local_setup.sh", $output);
-      }
-    }
-
-    file_put_contents("$platform_path/platform.make", $twig->render('platform/platform.make', $variables));
-    file_put_contents("$platform_path/build.sh", $twig->render('platform/build.sh', $variables));
-    $this->executeExternalCommand("chmod +x $platform_path/build.sh", $output);
-    file_put_contents("$platform_path/install.sh", $twig->render('platform/install.sh', $variables));
-    $this->executeExternalCommand("chmod +x $platform_path/install.sh", $output);
+    $this->generate_platform($platform_path, $output, $variables);
     $this->git_init($gituri, $name . '_platform', $platform_path, $output);
 
     // Generate profile files and commit to git
-    mkdir($profile_path);
-
-    mkdir("$profile_path/modules");
-    $this->executeExternalCommand("touch $profile_path/modules/.gitignore", $output);
-
-    mkdir("$profile_path/modules/custom");
-    $this->executeExternalCommand("touch $profile_path/modules/custom/.gitignore", $output);
-
-    mkdir("$profile_path/themes");
-    $this->executeExternalCommand("touch $profile_path/themes/.gitignore", $output);
-
-    file_put_contents("$profile_path/.gitignore", $twig->render('profile/gitignore', $variables));
-    file_put_contents("$profile_path/$profile.profile", $twig->render('profile/profile.profile', $variables));
-    file_put_contents("$profile_path/$profile.install", $twig->render('profile/profile.install', $variables));
-    file_put_contents("$profile_path/$profile.info", $twig->render('profile/profile.info', $variables));
-    file_put_contents("$profile_path/$profile.make", $twig->render('profile/profile.make', $variables));
+    $this->generate_profile($profile_path, $output, $variables);
     $this->git_init($gituri, $profile, $profile_path, $output);
 
     // Generate theme files and commit to git
-    mkdir($theme_path);
-    $this->executeExternalCommand("cp -r $template_path/theme/ $theme_path", $output);
-    // The .gitignore file is named gitignore to make sure it's not active in the scaffold repo
-    $this->executeExternalCommand("mv $theme_path/gitignore $theme_path/.gitignore", $output);
-    file_put_contents("$theme_path/{$profile}_theme.info", $twig->render("theme/theme.info", $variables));
-    $this->executeExternalCommand("rm $theme_path/theme.info", $output);
+    $this->generate_theme($theme_path, $output, $variables);
     $this->git_init($gituri, $theme, $theme_path, $output);
 
     // Cleanup
@@ -186,5 +145,87 @@ class CreateClientDirCommand extends BaseCommand {
     return $prefix ? "$prefix-$password" : $password;
   }
 
+  /**
+   * Generate the basic platform structure
+   *
+   * @param $path
+   * @param OutputInterface $output
+   * @param $variables
+   */
+  protected function generate_platform($path, OutputInterface $output, $variables) {
+    mkdir($path);
+    file_put_contents("$path/.gitignore", $this->twig->render('platform/gitignore'));
+    file_put_contents("$path/platform.make", $this->twig->render('platform/platform.make', $variables));
+    file_put_contents("$path/build.sh", $this->twig->render('platform/build.sh', $variables));
+    $this->executeExternalCommand("chmod +x $path/build.sh", $output);
+    file_put_contents("$path/install.sh", $this->twig->render('platform/install.sh', $variables));
+    $this->executeExternalCommand("chmod +x $path/install.sh", $output);
 
+    $site_path = "$path/htdocs/sites/default/";
+    mkdir($site_path, 0775, TRUE);
+
+    foreach (array('local', 'dev', 'test', 'live') as $env) {
+      $settings = array(
+        'profile' => $variables['profile'],
+        'database' => "{$variables['name']}_{$env}",
+        'username' => "{$variables['name']}_{$env}",
+        'password' => $this->generate_password('pw'),
+        'hostname' => ($env == 'local' ? 'localhost' : 'some_server'),
+      );
+      file_put_contents("$site_path/{$env}.settings.php", $this->twig->render('platform/settings.php', $settings));
+      if ($env == 'local') {
+        file_put_contents("$path/local_setup.sh", $this->twig->render('platform/local_setup.sh', $settings));
+        $this->executeExternalCommand("chmod +x $path/local_setup.sh", $output);
+      }
+    }
+  }
+
+  /**
+   * Generate the profile structure
+   *
+   * @param $path
+   * @param OutputInterface $output
+   * @param $variables
+   */
+  protected function generate_profile($path, OutputInterface $output, $variables) {
+    $profile = $variables['profile'];
+    mkdir($path);
+
+    mkdir("$path/modules");
+    $this->executeExternalCommand("touch $path/modules/.gitignore", $output);
+
+    mkdir("$path/modules/custom");
+    $this->executeExternalCommand("touch $path/modules/custom/.gitignore", $output);
+
+    mkdir("$path/themes");
+    $this->executeExternalCommand("touch $path/themes/.gitignore", $output);
+
+
+    file_put_contents("$path/.gitignore", $this->twig->render('profile/gitignore', $variables));
+    file_put_contents("$path/$profile.profile", $this->twig->render('profile/profile.profile', $variables));
+    file_put_contents("$path/$profile.install", $this->twig->render('profile/profile.install', $variables));
+    file_put_contents("$path/$profile.info", $this->twig->render('profile/profile.info', $variables));
+    file_put_contents("$path/$profile.make", $this->twig->render('profile/profile.make', $variables));
+  }
+
+  /**
+   * Generate the theme
+   *
+   * @param $path
+   * @param OutputInterface $output
+   * @param $variables
+   */
+  protected function generate_theme($path, OutputInterface $output, $variables) {
+    $template_path = $this->getTwig()->getLoader()->getPaths();
+    $template_path = $template_path[0];
+    $profile = $variables['profile'];
+    mkdir($path);
+    $this->executeExternalCommand("cp -r $template_path/theme/* $path", $output);
+    // The .gitignore file is named gitignore to make sure it's not active in the scaffold repo
+    $this->executeExternalCommand("mv $path/gitignore $path/.gitignore", $output);
+
+    file_put_contents("$path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
+    $this->executeExternalCommand("rm $path/theme.info", $output);
+
+  }
 }
