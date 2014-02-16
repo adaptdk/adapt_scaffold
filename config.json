@@ -3,6 +3,12 @@
     "remote" : "git@githost:/data/git",
     "local"  : "/tmp/git"
   },
+  "domains" : {
+    "local_prefix" : "loc.",
+    "local_suffix" : "",
+    "stage_prefix" : "",
+    "stage_suffix" : ".stage.cd.adapt.dk"
+  },
   "modules" : {
     "default" : {
       "core" : [
