@@ -32,8 +32,7 @@
       "adapt" : [
         { "name" : "adapt_core" },
         { "name" : "adapt_media" },
-        { "name" : "adapt_wysiwyg" },
-        { "name" : "adapt_permissions" }
+        { "name" : "adapt_wysiwyg" }
       ],
       "projects" : [],
       "submodules" : []
