@@ -34,7 +34,7 @@ class CreateClientDirCommand extends BaseCommand
 
         $name = $input->getArgument('name');
         $profile = $name;
-        $theme = $name . '_theme';
+        //$theme = $name . '_theme';
 
         //if (is_dir($name)) {
         //  throw new \Exception("Directory with name {$name} already exists.");
@@ -74,7 +74,7 @@ class CreateClientDirCommand extends BaseCommand
 
         $platform_path = "$tmp_path/platform";
         $profile_path = "$tmp_path/profile";
-        $theme_path = "$tmp_path/theme";
+        //$theme_path = "$profile_path/themes/custom/";
 
         $projects = array();
         $dependencies = array();
@@ -122,11 +122,12 @@ class CreateClientDirCommand extends BaseCommand
 
         // Generate profile files and commit to git
         $this->generate_profile($profile_path, $output, $variables);
+        $this->generate_theme($profile_path, $output, $variables);
         $this->git_init($gituri, $profile, $profile_path, $output);
 
         // Generate theme files and commit to git
-        $this->generate_theme($theme_path, $output, $variables);
-        $this->git_init($gituri, $theme, $theme_path, $output);
+        // $this->generate_theme($theme_path, $output, $variables);
+        // $this->git_init($gituri, $theme, $theme_path, $output);
 
         // Cleanup
         $this->executeExternalCommand("rm -fr $tmp_path", $output);
@@ -233,13 +234,15 @@ class CreateClientDirCommand extends BaseCommand
         $template_path = $this->getTwig()->getLoader()->getPaths();
         $template_path = $template_path[0];
         $profile = $variables['profile'];
-        mkdir($path);
-        $this->executeExternalCommand("cp -r $template_path/theme/* $path", $output);
-        // The .gitignore file is named gitignore to make sure it's not active in the scaffold repo
-        $this->executeExternalCommand("mv $path/gitignore $path/.gitignore", $output);
+        
+        $theme_path = "$path/themes/custom/{$profile}_theme";         
+        
+        mkdir($theme_path,0775,TRUE);
+        
+        $this->executeExternalCommand("cp -r $template_path/theme/* $theme_path", $output);
 
-        file_put_contents("$path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
-        $this->executeExternalCommand("rm $path/theme.info", $output);
+        file_put_contents("$theme_path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
+        $this->executeExternalCommand("rm $theme_path/theme.info", $output);
 
     }
 }

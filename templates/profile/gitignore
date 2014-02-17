@@ -5,5 +5,6 @@
 .sass-cache
 modules/contrib
 modules/global
+themes/contrib
+themes/global
 libraries
-themes
