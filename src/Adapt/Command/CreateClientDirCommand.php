@@ -23,7 +23,8 @@ class CreateClientDirCommand extends BaseCommand
              ->addArgument('name', InputArgument::REQUIRED, 'The client-dir name')
              ->addOption('title', null, InputOption::VALUE_OPTIONAL, 'The title of the client-dir')
              ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The description of the client-dir')
-             ->addOption('remote-git', null, InputOption::VALUE_NONE, "Initialize remote git repository");
+             ->addOption('remote-git', null, InputOption::VALUE_NONE, "Initialize remote git repository")
+             ->addOption('domain', 'd', InputOption::VALUE_OPTIONAL, "The full domain of the site e.g. example.com");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,6 +44,7 @@ class CreateClientDirCommand extends BaseCommand
         $dialog = $this->getHelperSet()->get('dialog');
         $title = $input->getOption('title');
         $description = $input->getOption('description');
+        $domain = $input->getOption('domain');
 
         if (empty($title)) {
             $title = $dialog->ask($output, '<question>Enter the title of the client dir:</question> ');
@@ -58,6 +60,14 @@ class CreateClientDirCommand extends BaseCommand
 
         if (empty($description)) {
             $description = $name;
+        }
+
+        if (empty($domain)) {
+            $domain = $dialog->ask($output, '<question>Enter the domain of the site</question>');
+        }
+
+        if (empty($domain)) {
+            $domain = $name . '.dk';
         }
 
         $gituri = 'file://' . $config->git->local;
@@ -100,29 +110,30 @@ class CreateClientDirCommand extends BaseCommand
         $dependencies = $config->modules->default;
 
         $variables = array(
-          'drupal_core_version' => $drupal_core_version,
-          'name' => $name,
-          'gituri' => $gituri,
-          'profile' => $profile,
-          'title' => $title,
-          'description' => $description,
-          'projects' => $projects,
-          'dependencies' => $dependencies,
-          'cron_key' => $this->generate_password('cron'),
-          'admin_name' => 'adaptadmin',
-          'admin_password' => $this->generate_password(),
+            'drupal_core_version' => $drupal_core_version,
+            'name' => $name,
+            'domain' => $domain,
+            'gituri' => $gituri,
+            'profile' => $profile,
+            'title' => $title,
+            'description' => $description,
+            'projects' => $projects,
+            'dependencies' => $dependencies,
+            'cron_key' => $this->generate_password('cron'),
+            'admin_name' => 'adaptadmin',
+            'admin_password' => $this->generate_password(),
         );
 
         // Create tmp folder for client dir
         mkdir($tmp_path);
 
         // Generate platform files and commit to git
-        $this->generate_platform($platform_path, $output, $variables);
+        $this->generate_platform($platform_path, $output, $variables, $config);
         $this->git_init($gituri, $name . '_platform', $platform_path, $output);
 
         // Generate profile files and commit to git
-        $this->generate_profile($profile_path, $output, $variables);
-        $this->generate_theme($profile_path, $output, $variables);
+        $this->generate_profile($profile_path, $output, $variables, $config);
+        $this->generate_theme($profile_path, $output, $variables, $config);
         $this->git_init($gituri, $profile, $profile_path, $output);
 
         // Generate theme files and commit to git
@@ -161,8 +172,29 @@ class CreateClientDirCommand extends BaseCommand
      * @param OutputInterface $output
      * @param $variables
      */
-    protected function generate_platform($path, OutputInterface $output, $variables)
+    protected function generate_platform($path, OutputInterface $output, $variables, $config)
     {
+        $domain = $variables['domain'];
+        $name = $variables['name'];
+        $domains = array(
+            'live' => $domain,
+            'stage' => $config->domains->stage_prefix . $name . $config->domains->stage_suffix,
+            'local' => $config->domains->local_prefix . $domain . $config->domains->local_suffix,
+        );
+
+        $aliases = array(
+            'name' => $name,
+            'domain' => $domains,
+            'htdocs' => array(
+                'live' => "/home/drupal/{$name}.live/site/htdocs",
+                'stage' => "/home/drupal/{$name}.stage/site/htdocs",
+            ),
+            'ssh-host' => array(
+                'live' => "",
+                'stage' => "local.salvia",
+            )
+        );
+
         mkdir($path);
         file_put_contents("$path/.gitignore", $this->twig->render('platform/gitignore'));
         file_put_contents("$path/platform.make", $this->twig->render('platform/platform.make', $variables));
@@ -170,6 +202,22 @@ class CreateClientDirCommand extends BaseCommand
         $this->executeExternalCommand("chmod +x $path/build.sh", $output);
         file_put_contents("$path/install.sh", $this->twig->render('platform/install.sh', $variables));
         $this->executeExternalCommand("chmod +x $path/install.sh", $output);
+
+        $drush = $path . "/drush";
+        mkdir($drush);
+        // root drush directory
+        file_put_contents("$drush/README.md", $this->twig->render('platform/drush/README.md'));
+        file_put_contents("$drush/drushrc.php", $this->twig->render('platform/drush/drushrc.php'));
+        // aliases
+        mkdir($drush . "/aliases");
+        file_put_contents("$drush/aliases/aliases.drushrc.php", $this->twig->render('platform/drush/aliases/aliases.drushrc.php', $aliases));
+        // Commands
+        mkdir($drush . "/commands");
+        $cmds = array('build', 'downsync', 'englishdevel', 'policy', 'registry_rebuild');
+        foreach ($cmds as $cmd) {
+            $cmd = $cmd . '.drush.inc';
+            file_put_contents("$drush/commands/$cmd", $this->twig->render("platform/drush/commands/{$cmd}"));
+        }
 
         $site_path = "$path/htdocs/sites/default/";
         mkdir($site_path, 0775, true);
@@ -200,7 +248,7 @@ class CreateClientDirCommand extends BaseCommand
      * @param OutputInterface $output
      * @param $variables
      */
-    protected function generate_profile($path, OutputInterface $output, $variables)
+    protected function generate_profile($path, OutputInterface $output, $variables, $config)
     {
         $profile = $variables['profile'];
         mkdir($path);
@@ -229,16 +277,16 @@ class CreateClientDirCommand extends BaseCommand
      * @param OutputInterface $output
      * @param $variables
      */
-    protected function generate_theme($path, OutputInterface $output, $variables)
+    protected function generate_theme($path, OutputInterface $output, $variables, $config)
     {
         $template_path = $this->getTwig()->getLoader()->getPaths();
         $template_path = $template_path[0];
         $profile = $variables['profile'];
-        
-        $theme_path = "$path/themes/custom/{$profile}_theme";         
-        
+
+        $theme_path = "$path/themes/custom/{$profile}_theme";
+
         mkdir($theme_path,0775,TRUE);
-        
+
         $this->executeExternalCommand("cp -r $template_path/theme/* $theme_path", $output);
 
         file_put_contents("$theme_path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
