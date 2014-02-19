@@ -10,18 +10,19 @@
  * everyone can just overwrite the different settings.
  */
 
-$aliases['{{ name }}.loc'] = array(
+$aliases['loc'] = array(
   'uri' => '{{ domain.local }}',
-  'root' => str_replace('drush/aliases', 'docroot', dirname(__FILE__)),
+  'root' => '/vagrant_sites/{{ domain.local }}/htdocs',
+  'remote-host' => 'default',
 );
 
-$aliases['{{ name }}.stage'] = array(
+$aliases['stage'] = array(
   'uri' => '{{ domain.stage }}',
   'root' => '{{ htdocs.stage }}',
   'remote-host' => '{{ ssh-host.stage }}',
 );
 
-$aliases['{{ name }}.live'] = array(
+$aliases['live'] = array(
   'uri' => '{{ domain.live }}',
   'root' => '{{ htdocs.live }}',
   'remote-host' => '{{ ssh-host.live }}',

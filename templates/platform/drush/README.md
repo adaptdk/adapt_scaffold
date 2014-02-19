@@ -35,6 +35,18 @@ Once the above snippet is in our drushrc.php file then drush will know to read o
 custom drushrc.php and to search our commands and aliases directory for commands
 and aliases.
 
+### Preparing your local machine
+Adding your local developer server to your .ssh/config
+
+Copy the output from:
+```sh
+$ vagrant ssh-config
+```
+insert it in the bottom of your ssh config file:
+```sh
+$ vim ~/.ssh/config
+```
+
 ###Aliases
 The aliases directory is used to store aliases specific to your project. This is a great
 place to share aliases such as _@example.staging_, _@example.live_, _@example.rc_ etc..
