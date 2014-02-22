@@ -35,6 +35,13 @@ projects[adapt_wysiwyg][download][type] = 'git'
 projects[adapt_wysiwyg][download][url] = 'http://github.com/adaptdk/adapt_wysiwyg.git'
 projects[adapt_wysiwyg][download][tag] = '0.1'
 
+; Adapt Commerce
+; projects[adapt_commerce][type] = 'module'
+; projects[adapt_commerce][subdir] = 'global'
+; projects[adapt_commerce][download][type] = 'git'
+; projects[adapt_commerce][download][url] = 'http://github.com/adaptdk/adapt_commerce.git'
+; projects[adapt_commerce][download][tag] = '0.3'
+
 ; Adapt Basetheme
 projects[adapt_basetheme][type] = 'theme'
 projects[adapt_basetheme][subdir] = 'global'
