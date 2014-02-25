@@ -19,7 +19,7 @@ projects[adapt_core][type] = 'module'
 projects[adapt_core][subdir] = 'global'
 projects[adapt_core][download][type] = 'git'
 projects[adapt_core][download][url] = 'http://github.com/adaptdk/adapt_core.git'
-projects[adapt_core][download][tag] = '0.8'
+projects[adapt_core][download][tag] = '0.9'
 
 ; Adapt Commerce
 ; projects[adapt_commerce][type] = 'module'
