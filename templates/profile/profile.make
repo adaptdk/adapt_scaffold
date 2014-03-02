@@ -26,7 +26,7 @@ projects[adapt_core][download][tag] = '0.11'
 ; projects[adapt_commerce][subdir] = 'global'
 ; projects[adapt_commerce][download][type] = 'git'
 ; projects[adapt_commerce][download][url] = 'http://github.com/adaptdk/adapt_commerce.git'
-; projects[adapt_commerce][download][tag] = '0.3'
+; projects[adapt_commerce][download][tag] = '0.4'
 
 ; Adapt Basetheme
 projects[adapt_basetheme][type] = 'theme'
