@@ -11,5 +11,5 @@ projects[drupal] = {{ drupal_core_version }}
 
 projects[{{ profile }}][type] = profile
 projects[{{ profile }}][download][type] = git
-projects[{{ profile }}][download][url] = {{ gituri }}/{{ profile }}.git
+projects[{{ profile }}][download][url] = {{ gituri }}/{{ profile }}/profile.git
 

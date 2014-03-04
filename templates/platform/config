@@ -1,0 +1,10 @@
+clientdir : {{clientdir}}
+domain : {{domain}}
+mysqlpassdev : {{mysqlpassdev}}
+mysqlpasstest : {{mysqlpasstest}}
+mysqlpasslive : {{mysqlpasslive}}
+cronkey : {{adaptadminpass}}
+htaccesspassdev : {{htaccesspassdev}}
+htaccesspasstest : {{htaccesspasstest}}
+htaccesspasslive : {{htaccesspasslive}}
+adaptadminpass : {{adaptadminpass}}

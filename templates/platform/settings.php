@@ -1,4 +1,5 @@
 <?php
+
 $databases = array();
 $databases['default']['default'] = array(
   'driver' => 'mysql',
@@ -8,6 +9,20 @@ $databases['default']['default'] = array(
   'host' => '{{ hostname }}',
   'prefix' => '',
 );
+
+{% if env == 'live' or env == 'test' %}
+// Preproccesing of js/css
+$conf['preprocess_css'] = 1;
+$conf['preprocess_js'] = 1;
+
+// Caching
+$conf['block_cache'] = 1;
+$conf['cache'] = 1;
+
+// Error reporting
+$conf['error_level'] = 0;
+{% endif %}
+
 $update_free_access = FALSE;
 $drupal_hash_salt = '';
 # $base_url = 'http://www.example.com';  // NO trailing slash!

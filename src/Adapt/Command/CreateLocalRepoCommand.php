@@ -25,17 +25,17 @@ class CreateLocalRepoCommand extends BaseCommand
       
       $name     = $input->getArgument('name');
       $gitpath  = $config->git->local;
-      $platform = "{$gitpath}/{$name}_platform.git";
-      $profile  = "{$gitpath}/{$name}.git";
+      $platform = "{$gitpath}/{$name}/platform.git";
+      $profile  = "{$gitpath}/{$name}/profile.git";
       
       if (is_dir($platform) || is_dir($profile)) {
         throw new \Exception("Local repository with name {$name} already exists.");
       }
       
-      mkdir($platform);
+      mkdir($platform, 0755, TRUE);
       $this->executeExternalCommand("cd $platform; git --bare init", $output);
       
-      mkdir($profile);
+      mkdir($profile, 0755, TRUE);
       $this->executeExternalCommand("cd $profile; git --bare init", $output);
       
       $output->writeln("<info>Succeeded, local repositories created </info>");

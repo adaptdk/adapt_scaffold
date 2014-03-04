@@ -35,11 +35,6 @@ class CreateClientDirCommand extends BaseCommand
 
         $name = $input->getArgument('name');
         $profile = $name;
-        //$theme = $name . '_theme';
-
-        //if (is_dir($name)) {
-        //  throw new \Exception("Directory with name {$name} already exists.");
-        //}
 
         $dialog = $this->getHelperSet()->get('dialog');
         $title = $input->getOption('title');
@@ -129,12 +124,12 @@ class CreateClientDirCommand extends BaseCommand
 
         // Generate platform files and commit to git
         $this->generate_platform($platform_path, $output, $variables, $config);
-        $this->git_init($gituri, $name . '_platform', $platform_path, $output);
+        $this->git_init($gituri, $name . '/platform', $platform_path, $output);
 
         // Generate profile files and commit to git
         $this->generate_profile($profile_path, $output, $variables, $config);
         $this->generate_theme($profile_path, $output, $variables, $config);
-        $this->git_init($gituri, $profile, $profile_path, $output);
+        $this->git_init($gituri, $profile . '/profile', $profile_path, $output);
 
         // Generate theme files and commit to git
         // $this->generate_theme($theme_path, $output, $variables);
@@ -144,7 +139,7 @@ class CreateClientDirCommand extends BaseCommand
         $this->executeExternalCommand("rm -fr $tmp_path", $output);
 
         $output->writeln(
-               "<info>Succeeded, now make a local clone: git clone ${gituri}/${name}_platform.git $name </info>"
+               "<info>Succeeded, now make a local clone: git clone ${gituri}/${name}/platform.git $name </info>"
         );
     }
 
@@ -219,26 +214,42 @@ class CreateClientDirCommand extends BaseCommand
             file_put_contents("$drush/commands/$cmd", $this->twig->render("platform/drush/commands/{$cmd}"));
         }
 
-        $site_path = "$path/htdocs/sites/default/";
-        mkdir($site_path, 0775, true);
+        mkdir($path . '/settings');
+        
+        $config = array(
+          'clientdir'  => $variables['profile'],
+          'domain' => $domain,
+          'cronkey'    => $variables['cronkey'],
+          'adaptadminpass' => $variables['admin_password'],
+        );
 
         foreach (array('local', 'dev', 'test', 'live') as $env) {
             $settings = array(
               'profile' => $variables['profile'],
               'database' => "{$variables['name']}_{$env}",
               'username' => "{$variables['name']}_{$env}",
-              'password' => $this->generate_password('pw'),
-              'hostname' => ($env == 'local' ? 'localhost' : 'some_server'),
+              'password' => $this->generate_password(),
+              'hostname' => ($env == 'local' ? 'localhost' : "{$name}.mysql.{$env}.cd.adapt.dk"),
+              'env'      => $env,
             );
+
             file_put_contents(
-              "$site_path/{$env}.settings.php",
+              "$path/settings/{$env}.settings.php",
               $this->twig->render('platform/settings.php', $settings)
             );
+
             if ($env == 'local') {
                 file_put_contents("$path/local_setup.sh", $this->twig->render('platform/local_setup.sh', $settings));
                 $this->executeExternalCommand("chmod +x $path/local_setup.sh", $output);
+            } else {
+              $config["mysqlpass{$env}"] = $settings['password'];
+              $config["htaccesspass{$env}"] = $this->generate_password('', 10);
             }
         }
+        
+        // Write config file used to setup apache/cron stuff.        
+        file_put_contents("$path/settings/config", $this->twig->render('platform/config', $config));
+
     }
 
     /**
