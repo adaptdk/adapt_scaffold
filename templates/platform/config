@@ -3,7 +3,7 @@ domain : {{domain}}
 mysqlpassdev : {{mysqlpassdev}}
 mysqlpasstest : {{mysqlpasstest}}
 mysqlpasslive : {{mysqlpasslive}}
-cronkey : {{adaptadminpass}}
+cronkey : {{cronkey}}
 htaccesspassdev : {{htaccesspassdev}}
 htaccesspasstest : {{htaccesspasstest}}
 htaccesspasslive : {{htaccesspasslive}}

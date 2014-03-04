@@ -219,7 +219,7 @@ class CreateClientDirCommand extends BaseCommand
         $config = array(
           'clientdir'  => $variables['profile'],
           'domain' => $domain,
-          'cronkey'    => $variables['cronkey'],
+          'cronkey'    => $variables['cron_key'],
           'adaptadminpass' => $variables['admin_password'],
         );
 
