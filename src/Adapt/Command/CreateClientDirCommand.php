@@ -231,6 +231,7 @@ class CreateClientDirCommand extends BaseCommand
               'password' => ($env == 'local' ? 'root' : $this->generate_password()),
               'hostname' => ($env == 'local' ? 'localhost' : "{$name}.mysql.{$env}.cd.adapt.dk"),
               'env'      => $env,
+              'domains' => $domains,
             );
 
             file_put_contents(

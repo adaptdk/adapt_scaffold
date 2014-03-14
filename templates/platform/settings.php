@@ -23,6 +23,11 @@ $conf['cache'] = 1;
 $conf['error_level'] = 0;
 {% endif %}
 
+{% if env == 'local' %}
+$conf['stage_file_proxy_origin'] = 'http://{{ domains.stage }}';
+$conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
+{% endif %}
+
 $update_free_access = FALSE;
 $drupal_hash_salt = '';
 # $base_url = 'http://www.example.com';  // NO trailing slash!
