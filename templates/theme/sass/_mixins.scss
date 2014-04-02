@@ -108,7 +108,7 @@
 }
 @mixin submit {
     @include border-radius($border-radius);
-    background: #fff;
+    margin: 10px;
     cursor: pointer;
     height: 32px;
     line-height: 32px;
