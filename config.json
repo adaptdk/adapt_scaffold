@@ -12,12 +12,9 @@
   "modules" : {
     "default" : {
       "core" : [
-        { "name" : "block" },
         { "name" : "contextual" },
-        { "name" : "dblog" },
         { "name" : "field" },
         { "name" : "field_sql_storage" },
-        { "name" : "field_ui" },
         { "name" : "file" },
         { "name" : "filter" },
         { "name" : "image" },
