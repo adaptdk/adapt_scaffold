@@ -11,27 +11,7 @@
   },
   "modules" : {
     "default" : {
-      "core" : [
-        { "name" : "contextual" },
-        { "name" : "field" },
-        { "name" : "field_sql_storage" },
-        { "name" : "file" },
-        { "name" : "filter" },
-        { "name" : "image" },
-        { "name" : "list" },
-        { "name" : "locale" },
-        { "name" : "menu" },
-        { "name" : "node" },
-        { "name" : "number" },
-        { "name" : "options" },
-        { "name" : "path" },
-        { "name" : "rdf" },
-        { "name" : "system" },
-        { "name" : "taxonomy" },
-        { "name" : "text" },
-        { "name" : "update" },
-        { "name" : "user" }
-      ],
+      "core" : [],
       "adapt" : [
         { "name" : "adapt_core" },
         { "name" : "adapt_media" },
