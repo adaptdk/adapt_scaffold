@@ -34,3 +34,5 @@ projects[adapt_basetheme][subdir] = 'global'
 projects[adapt_basetheme][download][type] = 'git'
 projects[adapt_basetheme][download][url] = 'https://github.com/adaptdk/adapt_basetheme.git'
 projects[adapt_basetheme][download][tag] = '0.5'
+
+includes[adapt_core_override] = ../../../adapt_core_override.make
