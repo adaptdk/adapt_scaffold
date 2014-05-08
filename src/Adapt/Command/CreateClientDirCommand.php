@@ -227,7 +227,7 @@ class CreateClientDirCommand extends BaseCommand
         'database' => "{$variables['name']}_{$env}",
         'username' => ($env == 'local' ? 'root' : "{$variables['name']}_{$env}"),
         'password' => ($env == 'local' ? 'root' : $this->generate_password()),
-        'hostname' => ($env == 'local' ? 'localhost' : "{$name}.mysql.{$env}.cd.adapt.dk"),
+        'hostname' => ($env == 'local' ? '127.0.0.1' : "{$name}.mysql.{$env}.cd.adapt.dk"),
         'env'      => $env,
         'domains' => $domains,
       );
