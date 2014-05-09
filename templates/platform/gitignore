@@ -3,7 +3,7 @@
 .Spotlight-V100
 .Trashes
 .idea
-htdocs/*
+htdocs
 !htdocs/sites/
 htdocs/sites/all
 htdocs/sites/README.txt
