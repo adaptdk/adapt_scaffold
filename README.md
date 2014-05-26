@@ -23,11 +23,12 @@ Optionally make a symlink :
 
 ### Local
     
-By default local repositories are made in /tmp/git, you can change this is the config.json file.
+By default the local git repositories are made in /tmp/git, you can change this is the config.json file.
 
     scaffold create-local-repository <client-dir>
     
 ## Create the client-dir
+TODO: What does this do?
 
     scaffold create-client-dir <client-dir>
 
