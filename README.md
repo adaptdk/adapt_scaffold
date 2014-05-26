@@ -34,6 +34,8 @@ Before you run this you should have setup the 2 required git repositories either
 
     scaffold create-client-dir <client-dir>
 
+Notice: naming of client-dir should follow naming principles described in at http://www.php.net/manual/en/functions.user-defined.php a.k.a. be a valid function name.
+
 ## Checkout of your new project/clientdir/repositories
 Check the platform repo out as ```CHECKOUT_FOLDER_NAME```.
 
