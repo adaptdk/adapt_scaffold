@@ -23,35 +23,37 @@ Optionally make a symlink :
 
 ### Local
     
-By default the local git repositories are made in /tmp/git, you can change this in the config.json file.
+By default the local git repositories are made in ```/tmp/git```, you can change this in the config.json file.
 
     scaffold create-local-repository <client-dir>
     
 ## Create the client-dir
-TODO: What does this do?
 Creates the starting structure of the platform and profile repositories.
+
 Before you run this you should have setup the 2 required git repositories either in a local directory or at a remote repository.
 
     scaffold create-client-dir <client-dir>
 
-# Checkout repository
-Check the platform repo out as <client-dir> or whatever you vagrant magic want it to be called.
+## Checkout of your new project/clientdir/repositories
+Check the platform repo out as ```CHECKOUT_FOLDER_NAME```.
 
-    git clone file:///tmp/git/<client-dir>_platform.git <client-dir>
-
-# Create local database
-You can create a local database with vagrant or this command:
-
-    cd <client-dir-folder>
-    ./local_setup.sh
+    git clone file:///tmp/git/<client-dir>_platform.git CHECKOUT_FOLDER_NAME
+    cd CHECKOUT_FOLDER_NAME
     
-# Build
+Notice: if your using the parrot vagrant box you should replace ```CHECKOUT_FOLDER_NAME``` with the dev domain of the project.
 
-    cd <client-dir-folder>
+### Build
+First we build the htdocs folder so that we actually download drupal core and the initial profile including all contrib modules.
+
     ./build.sh
 
-# Install
+### Create local database
+You can create the database and symlinking the settings.php into the ```sites/default``` folder
 
-    cd <client-dir-folder>
+    ./local_setup.sh
+
+### Install
+Here we execute the ```drush site-install``` command and set the ```cron_key``` variable
+
     ./install.sh
 
