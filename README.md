@@ -4,6 +4,12 @@ You will need the situs plugin for drush :
 
     drush dl drush_situs
  
+Requires at least version 1.1 of drush_situs, if you have an old version you can update by doing the following.
+
+    rm -rf ~/.drush/drush_situs
+    drush cc drush
+    drush dl drush_situs
+ 
 ## Setup the scaffold program 
     
 Clone the scaffold program :
