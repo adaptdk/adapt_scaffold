@@ -193,6 +193,16 @@
 # $options['variables']['anonymous'] = 'Visitor';
 
 /**
+ * enable specific modules when drush @loc devify have been run.
+ */
+$options['enable-modules'] = array(
+  'views_ui',
+  'field_ui',
+  'devel',
+  'devel_generate',
+);
+
+/**
  * Command-specific options
  *
  * To define options that are only applicable to certain commands,
