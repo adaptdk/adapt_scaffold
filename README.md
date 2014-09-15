@@ -27,6 +27,10 @@ Optionally make a symlink :
 
 ## Create repository
 
+Remember to keep your adapt_scaffold directory up2date
+
+    git pull
+
 ### Local
     
 By default the local git repositories are made in ```/tmp/git```, you can change this in the config.json file.
