@@ -28,6 +28,11 @@ $conf['stage_file_proxy_origin'] = 'http://{{ domains.stage }}';
 $conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
 {% endif %}
 
+// Disable the possibility to export menu links to features
+$conf['features_admin_show_component_menu_links'] = 0;
+// If you need to deploy menu links use either update hooks
+// deploy or defaultconfig.
+
 $update_free_access = FALSE;
 $drupal_hash_salt = '';
 # $base_url = 'http://www.example.com';  // NO trailing slash!
