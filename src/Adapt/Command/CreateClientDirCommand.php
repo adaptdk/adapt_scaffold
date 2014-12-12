@@ -221,7 +221,7 @@ class CreateClientDirCommand extends BaseCommand
       'adaptadminpass' => $variables['admin_password'],
     );
 
-    foreach (array('local', 'dev', 'test', 'live') as $env) {
+    foreach (array('local', 'dev', 'test', 'live', 'prod') as $env) {
       $settings = array(
         'profile' => $variables['profile'],
         'database' => "{$variables['name']}_{$env}",
