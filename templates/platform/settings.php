@@ -10,7 +10,7 @@ $databases['default']['default'] = array(
   'prefix' => '',
 );
 
-{% if env == 'live' or env == 'test' %}
+{% if env == 'live' or env == 'prod' or env == 'test' %}
 // Preproccesing of js/css
 $conf['preprocess_css'] = 1;
 $conf['preprocess_js'] = 1;
