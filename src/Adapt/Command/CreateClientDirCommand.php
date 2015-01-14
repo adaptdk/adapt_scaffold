@@ -277,8 +277,7 @@ class CreateClientDirCommand extends BaseCommand
     file_put_contents("$path/$profile.install", $this->twig->render('profile/profile.install', $variables));
     file_put_contents("$path/$profile.info", $this->twig->render('profile/profile.info', $variables));
     file_put_contents("$path/$profile.make", $this->twig->render('profile/profile.make', $variables));
-    file_put_contents("$path/adapt_core_override.make", $this->twig->render('profile/adapt_core_override.make', $variables));
-    
+  
   }
 
   /**
