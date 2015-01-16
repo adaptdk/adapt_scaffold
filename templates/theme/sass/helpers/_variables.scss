@@ -1,24 +1,24 @@
-
 // -----------------------------------------
-  // Helpers
-// -----------------------------------------
-
-@import "normalize";
-@import "variables";
-@import "mixins";
-
-// -----------------------------------------
-  // Base
+  // Colors
 // -----------------------------------------
 
-@import "base";
-@import "form";
+$red: #CB4043;
+$gray: #DADADA;
+
+$body-color: #fff;
+$text-color: #333;
 
 // -----------------------------------------
-  // Layout
+  // Font Sizes
 // -----------------------------------------
 
-@import "header";
-@import "main";
-@import "footer";
+$font-size: 12px;
 
+// -----------------------------------------
+  // Font Families
+// -----------------------------------------
+
+/* GRIDS */
+$grids: 12;
+$gutters-in-px: 20; //px
+$gutters: $gutters-in-px/(($width - (11*$gutters-in-px))/$grids);
