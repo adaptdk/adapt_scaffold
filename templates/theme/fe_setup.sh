@@ -16,9 +16,11 @@ if [ "$CONT" == "y" ]; then
 
     sed -i -e '/compass/d' screen.scss
     sed -i -e '/singularitygs/d' screen.scss
+    sed -i -e '/grid-settings/d' screen.scss
 
     sed -i -e '/compass/d' editor.scss
-    sed -i -e '/singularitygs/d' editor.scss
+    sed -i -e '/singularitygs/d' screen.scss
+    sed -i -e '/grid-settings/d' editor.scss
 
     rm -rf screen.scss-e
     rm -rf editor.scss-e
@@ -39,12 +41,24 @@ if [ "$CONT" == "y" ]; then
     else
       echo "@import 'neat/neat'; is already added to screen.scss";
     fi
-
     if ! grep -q "@import 'neat/neat';" editor.scss ; then
       echo "@import 'neat/neat';" | cat - editor.scss > temp && mv temp editor.scss
       echo "Added neat to editor.scss"
     else
       echo "@import 'neat/neat'; is already added to editor.scss";
+    fi
+
+    if ! grep -q "@import 'grid-settings';" screen.scss ; then
+      echo "@import 'grid-settings';" | cat - screen.scss > temp && mv temp screen.scss
+      echo "Added grid-settings to screen.scss"
+    else
+      echo "@import 'grid-settings'; is already added to screen.scss";
+    fi
+    if ! grep -q "@import 'grid-settings';" editor.scss ; then
+      echo "@import 'grid-settings';" | cat - editor.scss > temp && mv temp editor.scss
+      echo "Added grid-settings to editor.scss"
+    else
+      echo "@import 'grid-settings'; is already added to editor.scss";
     fi
 
     if ! grep -q "@import 'bourbon/bourbon';" screen.scss ; then
@@ -53,7 +67,6 @@ if [ "$CONT" == "y" ]; then
     else
       echo "@import 'bourbon/bourbon'; is already added to screen.scss";
     fi
-
     if ! grep -q "@import 'bourbon/bourbon';" editor.scss ; then
       echo "@import 'bourbon/bourbon';" | cat - editor.scss > temp && mv temp editor.scss
       echo "Added bourbon to editor.scss"
@@ -61,20 +74,19 @@ if [ "$CONT" == "y" ]; then
       echo "@import 'bourbon/bourbon'; is already added to editor.scss";
     fi
 
+    rm -rf _grid-settings.scss
     if [ ! -f _grid-settings.scss ]; then
 
       printf '@import "neat/neat-helpers";
 
-  // Change the grid settings
-  $column: 60px;
-  $gutter: 20px;
-  $grid-columns: 12;
-  $max-width: 960px;
-  //$visual-grid: true;
+$column: 60px;
+$gutter: 20px;
+$grid-columns: 12;
+$max-width: 960px;
+//$visual-grid: true;
 
-  // Define your breakpoints
-  $tablet: new-breakpoint(max-width 768px 8);
-  $mobile: new-breakpoint(max-width 480px 4);' >> _grid-settings.scss
+$tablet: new-breakpoint(max-width 768px 8);
+$mobile: new-breakpoint(max-width 480px 4);' >> _grid-settings.scss
 
       echo "Created _grid-settings.scss file"
 
@@ -93,9 +105,11 @@ if [ "$CONT" == "y" ]; then
 
     sed -i -e '/neat/d' screen.scss
     sed -i -e '/bourbon/d' screen.scss
+    sed -i -e '/grid-settings/d' screen.scss
 
     sed -i -e '/neat/d' editor.scss
     sed -i -e '/bourbon/d' editor.scss
+    sed -i -e '/grid-settings/d' editor.scss
 
     rm -rf screen.scss-e
     rm -rf editor.scss-e
@@ -120,6 +134,18 @@ if [ "$CONT" == "y" ]; then
       echo "@import 'singularitygs'; is already added to editor.scss";
     fi
 
+    if ! grep -q "@import 'grid-settings';" screen.scss ; then
+      echo "@import 'grid-settings';" | cat - screen.scss > temp && mv temp screen.scss
+      echo "Added grid-settings to screen.scss"
+    else
+      echo "@import 'grid-settings'; is already added to screen.scss";
+    fi
+    if ! grep -q "@import 'grid-settings';" editor.scss ; then
+      echo "@import 'grid-settings';" | cat - editor.scss > temp && mv temp editor.scss
+      echo "Added grid-settings to editor.scss"
+    else
+      echo "@import 'grid-settings'; is already added to editor.scss";
+    fi
 
     if ! grep -q "@import 'compass';" screen.scss ; then
       echo "@import 'compass';" | cat - screen.scss > temp && mv temp screen.scss
@@ -137,32 +163,43 @@ if [ "$CONT" == "y" ]; then
     if [ ! -f ../config.rb ]; then
 
       printf "# Require any additional compass plugins here.
-  require 'singularitygs'
+require 'singularitygs'
 
-  # Set this to the root of your project when deployed:
-  http_path = '/'
-  css_dir = 'css'
-  sass_dir = 'sass'
-  images_dir = 'img'
-  javascripts_dir = 'js'
+# Set this to the root of your project when deployed:
+http_path = '/'
+css_dir = 'css'
+sass_dir = 'sass'
+images_dir = 'img'
+javascripts_dir = 'js'
 
-  # You can select your preferred output style here (can be overridden via the command line):
-  output_style = :compact
+# You can select your preferred output style here (can be overridden via the command line):
+output_style = :compact
 
-  # To enable relative paths to assets via compass helper functions. Uncomment:
-  # relative_assets = true
+# To enable relative paths to assets via compass helper functions. Uncomment:
+# relative_assets = true
 
-  # To disable debugging comments that display the original location of your selectors. Uncomment:
-  line_comments = false
+# To disable debugging comments that display the original location of your selectors. Uncomment:
+line_comments = false
 
 
-  # If you prefer the indented syntax, you might want to regenerate this
-  # project again passing --syntax sass, or you can uncomment this:
-  # preferred_syntax = :sass
-  # and then run:
-  # sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass" >> ../config.rb
+# If you prefer the indented syntax, you might want to regenerate this
+# project again passing --syntax sass, or you can uncomment this:
+# preferred_syntax = :sass
+# and then run:
+# sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass" >> ../config.rb
 
       echo "Created config.rb file"
+
+    fi
+
+    rm -rf _grid-settings.scss
+    if [ ! -f _grid-settings.scss ]; then
+
+      printf '$grids: 12;
+$gutters-in-px: 20; //px
+$gutters: $gutters-in-px/(($width - (11*$gutters-in-px))/$grids);' >> _grid-settings.scss
+
+      echo "Created _grid-settings.scss file"
 
     fi
 
