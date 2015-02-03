@@ -1,14 +1,10 @@
+@charset "UTF-8";
 
-// -----------------------------------------
-  // Helpers
-// -----------------------------------------
+@import "base/config";
+@import "base/typography";
+@import "base/utilities";
+@import "base/doc-elements";
 
-@import "normalize";
-@import "variables";
-@import "mixins";
-
-// -----------------------------------------
-  // Base
-// -----------------------------------------
-
-@import "base";
+body.cke_show_borders {
+  padding: 20px;
+}
