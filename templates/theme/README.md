@@ -83,13 +83,13 @@ The preprocessor of choice is SCSS (Sassy SASS) and not SASS. SMACCS style so ou
 ##### Folder Architecture
 Folder structure is based on categorization of SMACCS, but also of roughly the most common scenarios. This gives a sense of logical organization for when working with Drupal.
 
-+ ###### base
++ **base**
 Variables, mixins, basic or most common single element selectors body, p, a, h1, h2, h3
-+ ###### layout
++ **layout**
 Larger regions of layout like header, footer, sidebars, reusable design patterns like column lists etc.
-+ ###### modules
++ **modules**
 Reusable elements like buttons, forms, elements, or widget components.
-+ ###### vendor
++ **vendor**
 Contributed CSS libraries from either jquery plugins, or animations libraries
 
 Create your own folders additionally to your needs depending / based on project.
