@@ -43,7 +43,7 @@ Installing bourbon and neat manually.
 ```bash
 gem install bourbon neat
 ```
-2. Browse to your SASS directory and type
+2. Browse to your sass directory and type
 ```bash
 bourbon install
 neat install
@@ -53,7 +53,6 @@ neat install
 @import "bourbon/bourbon";
 @import "neat/neat";
 ```
-4. Create your Gemfile.
 
 ##### Manually install compass + singularity.
 steps for compass singularity
@@ -65,7 +64,6 @@ gem install compass singularity
 ```bash
 compass install compass --sass-dir "sass" --css-dir "css" --javascripts-dir "js" --images-dir "img"
 ```
-3. Create your Gem file.
 
 #### Gemfiles
 ___
