@@ -19,21 +19,28 @@ if [ "$CONT" == "y" ]; then
     sed -i -e '/grid-settings/d' screen.scss
 
     sed -i -e '/compass/d' editor.scss
-    sed -i -e '/singularitygs/d' screen.scss
+    sed -i -e '/singularitygs/d' editor.scss
     sed -i -e '/grid-settings/d' editor.scss
 
     rm -rf screen.scss-e
     rm -rf editor.scss-e
 
-    if ! gem spec bourbon > /dev/null 2>&1; then
-      sudo gem install bourbon
-    fi
-    if ! gem spec neat > /dev/null 2>&1; then
-      sudo gem install neat
-    fi
+    # Install gems
+    sudo gem install bourbon -v 3.2.4
+    sudo gem install neat -v 1.7.0
 
+    # Install
     bourbon install
     neat install
+
+    # Make Gemfile
+    rm -rf ../Gemfile
+    printf 'source "https://rubygems.org"
+
+gem "bourbon", "3.2.4"
+gem "neat", "1.7.0"' >> ../Gemfile
+
+    echo "Added Gemfile";
 
     if ! grep -q "@import 'neat/neat';" screen.scss ; then
       echo "@import 'neat/neat';" | cat - screen.scss > temp && mv temp screen.scss
@@ -114,12 +121,18 @@ $mobile: new-breakpoint(max-width 480px 4);' >> _grid-settings.scss
     rm -rf screen.scss-e
     rm -rf editor.scss-e
 
-    if ! gem spec compass > /dev/null 2>&1; then
-      sudo gem install compass
-    fi
-    if ! gem spec singularitygs > /dev/null 2>&1; then
-      sudo gem install singularitygs
-    fi
+    # Install gems
+    sudo gem install compass -v 1.0.3
+    sudo gem install singularitygs -v 1.5.1
+
+    # Make Gemfile
+    rm -rf ../Gemfile
+    printf 'source "https://rubygems.org"
+
+gem "compass", "1.0.3"
+gem "singularitygs", "1.5.1"' >> ../Gemfile
+
+    echo "Added Gemfile";
 
     if ! grep -q "@import 'singularitygs';" screen.scss ; then
       echo "@import 'singularitygs';" | cat - screen.scss > temp && mv temp screen.scss
