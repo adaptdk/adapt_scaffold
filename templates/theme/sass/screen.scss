@@ -1,24 +1,14 @@
+@charset "UTF-8";
 
-// -----------------------------------------
-  // Helpers
-// -----------------------------------------
+@import "base/config";
+@import "base/typography";
+@import "base/utilities";
+@import "base/doc-elements";
 
-@import "normalize";
-@import "variables";
-@import "mixins";
+@import "layout/header";
+@import "layout/footer";
 
-// -----------------------------------------
-  // Base
-// -----------------------------------------
+@import "modules/forms";
 
-@import "base";
-@import "form";
-
-// -----------------------------------------
-  // Layout
-// -----------------------------------------
-
-@import "header";
-@import "main";
-@import "footer";
+@import "vendor/vendor";
 

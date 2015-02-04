@@ -6,19 +6,20 @@ core        = 7.x
 engine      = phptemplate
 base theme  = adapt_basetheme
 
-; Regions =====================================================================
-
+; Regions
+; ------------------------
 ;regions[content] = Content
 
-; Stylesheets =================================================================
-
+; Stylesheets
+; ------------------------
+stylesheets[all][] = css/normalize.css
 stylesheets[all][] = css/screen.css
 
+; Javascripts
+; ------------------------
+scripts[] = js/modernizr.js
+scripts[] = js/main.js
 
-; Scripts =====================================================================
-
-; scripts[] = js/modernizr.js
-; scripts[] = js/main.js
-
-; Panels layouts. You can place multiple layouts under the "layouts" folder.
+; Panel layouts
+; ------------------------
 plugins[panels][layouts] = templates/layouts
