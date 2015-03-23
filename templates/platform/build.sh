@@ -1,3 +1,5 @@
+#!/bin/bash
+
 drush situs-build --root=htdocs --make-file=./platform.make --git-check --git-check-ignore-regex=/global/,/contrib/,/libraries/
 
 if pushd "htdocs/sites/all" > /dev/null; then
