@@ -23,8 +23,7 @@ class CreateClientDirCommand extends BaseCommand
        ->addArgument('name', InputArgument::REQUIRED, 'The client-dir name')
        ->addOption('title', null, InputOption::VALUE_OPTIONAL, 'The title of the client-dir')
        ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The description of the client-dir')
-       ->addOption('platform-git', null, InputOption::VALUE_NONE, "Initialize remote platform git repository")
-       ->addOption('profile-git', null, InputOption::VALUE_NONE, "Initialize remote profile git repository")
+       ->addOption('remote-git', null, InputOption::VALUE_NONE, "Initialize remote platform git repository")
        ->addOption('domain', 'd', InputOption::VALUE_OPTIONAL, "The full domain of the site e.g. example.com");
   }
 
@@ -67,15 +66,10 @@ class CreateClientDirCommand extends BaseCommand
     }
 
     $gituri = 'file://' . $config->git->local;
-    $platform_git = $input->getOption('platform-git');
+    $git_profile = $config->git->profile;
+    $platform_git = $input->getOption('remote-git');
     if ($platform_git) {
       $gituri = $config->git->platform;
-    }
-
-    $git_profile = 'file://' . $config->git->local;
-    $profile_git = $input->getOption('profile-git');
-    if ($profile_git) {
-      $git_profile = $config->git->profile;
     }
 
     $this->twig = $this->getTwig();
@@ -131,12 +125,12 @@ class CreateClientDirCommand extends BaseCommand
 
     // Generate platform files and commit to git
     $this->generate_platform($platform_path, $output, $variables, $config);
-    $this->git_init($gituri, $name . '/platform', $platform_path, $output);
+    $this->git_init($gituri, $name, 'platform', $platform_path, $output);
 
     // Generate profile files and commit to git
     $this->generate_profile($profile_path, $output, $variables, $config);
     $this->generate_theme($profile_path, $output, $variables, $config);
-    $this->git_init($git_profile, $profile . '/profile', $profile_path, $output);
+    $this->git_init($git_profile, $profile, 'profile', $profile_path, $output);
 
     // Generate theme files and commit to git
     // $this->generate_theme($theme_path, $output, $variables);
@@ -150,12 +144,18 @@ class CreateClientDirCommand extends BaseCommand
     );
   }
 
-  protected function git_init($gituri, $repo, $path, $output)
+  protected function git_init($gituri, $name, $type, $path, $output)
   {
     $this->executeExternalCommand("cd $path; git init", $output);
     $this->executeExternalCommand("cd $path; git add .", $output);
     $this->executeExternalCommand("cd $path; git commit -m 'initial commit'", $output);
-    $this->executeExternalCommand("cd $path; git remote add origin $gituri/$repo.git", $output);
+    if ($type == 'profile'){
+      $this->executeExternalCommand("cd $path; git remote add origin $gituri/$name.git", $output);
+    }
+    else {
+      // if we are pushing to platform.
+      $this->executeExternalCommand("cd $path; git remote add origin $gituri/$name/$type.git", $output);
+    }
     $this->executeExternalCommand("cd $path; git push origin master", $output);
   }
 
