@@ -221,12 +221,6 @@ class CreateClientDirCommand extends BaseCommand
       'adaptadminpass' => $variables['admin_password'],
     );
 
-    $prime_shared_secret = array(
-      'dev'  => '',
-      'test' => 'UdaeASS0N+urSYgU',
-      'prod' => 'vaWcG25y6McJtysr',
-    );
-
     foreach (array('local', 'test', 'prod') as $env) {
       $settings = array(
         'profile' => $variables['profile'],
@@ -238,8 +232,8 @@ class CreateClientDirCommand extends BaseCommand
         'domains' => $domains,
         'prime' => array(
           'tgt' => 'https://prime01/sitereporting/adapt_monitor/report',
-          'ss' => $prime_shared_secret[$env],
-          'enabled' => ($prime_shared_secret[$env]) ? TRUE : FALSE,
+          'ss' => '',
+          'enabled' => ($env != 'loval') ? TRUE : FALSE,
           'key' => "{$variables['name']}_{$env}",
         ),
       );
