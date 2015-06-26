@@ -8,7 +8,7 @@
 <div<?php print $css_id ? " id=\"$css_id\"" : ''; ?> class="page-wrapper">
 
   <?php if (!empty($content['header'])): ?>
-    <header id="header" role="banner" class="header">
+    <header role="banner" class="header">
       <div class="inner">
         <?php print $content['header']; ?>
       </div>
@@ -16,7 +16,7 @@
   <?php endif; ?>
 
   <?php if (!empty($content['main'])): ?>
-    <main id="main" role="main" class="main">
+    <main role="main" class="main">
       <div class="inner">
         <?php print render($content['main']); ?>
       </div>
@@ -24,7 +24,7 @@
   <?php endif; ?>
 
   <?php if (!empty($content['footer'])): ?>
-    <footer id="footer" role="contentinfo" class="footer">
+    <footer role="contentinfo" class="footer">
       <div class="inner">
         <?php print $content['footer']; ?>
       </div>
