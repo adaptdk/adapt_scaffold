@@ -1,12 +1,18 @@
 @charset "UTF-8";
 
+// Base
+// ------------------------
 @import "base/normalize";     // Normalization across browsers
 @import "base/variables";     // Configurations
 @import "base/typography";    // Typography
 @import "base/utilities";     // Toolbelt, mixins
 @import "base/doc-elements";  // HTML elements.
 
+// Layout
+// ------------------------
 @import "layout/header";      // Header layout
 @import "layout/footer";      // Footer layout
 
+// Modules
+// ------------------------
 @import "modules/forms";      // Forms

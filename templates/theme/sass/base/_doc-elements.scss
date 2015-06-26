@@ -1,7 +1,5 @@
-
 // Document body
 // ------------------------
-
 body {
   background-color: $base-background-color;
   color: $base-font-color;
@@ -12,7 +10,6 @@ body {
 
 // Headings
 // ------------------------
-
 h1, h2, h3, h4, h5, h6 {
   text-rendering: optimizeLegibility;
   line-height: $base-heading-line-height;
@@ -44,7 +41,6 @@ h6 {
 
 // Anchor
 // ------------------------
-
 a {
   &:hover {}
   &:active, &:focus {}
