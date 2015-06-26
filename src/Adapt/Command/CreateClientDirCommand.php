@@ -221,7 +221,7 @@ class CreateClientDirCommand extends BaseCommand
       'adaptadminpass' => $variables['admin_password'],
     );
 
-    foreach (array('local', 'dev', 'test', 'live', 'prod') as $env) {
+    foreach (array('local', 'test', 'prod') as $env) {
       $settings = array(
         'profile' => $variables['profile'],
         'database' => "{$variables['name']}_{$env}",
@@ -230,6 +230,12 @@ class CreateClientDirCommand extends BaseCommand
         'hostname' => ($env == 'local' ? '127.0.0.1' : "{$name}.mysql.{$env}.cd.adapt.dk"),
         'env'      => $env,
         'domains' => $domains,
+        'prime' => array(
+          'tgt' => 'https://prime01/sitereporting/adapt_monitor/report',
+          'ss' => '',
+          'enabled' => ($env != 'loval') ? TRUE : FALSE,
+          'key' => "{$variables['name']}_{$env}",
+        ),
       );
 
       file_put_contents(
