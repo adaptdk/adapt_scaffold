@@ -44,3 +44,7 @@ Larger regions of layout like header, footer, sidebars, reusable design patterns
 Reusable elements like buttons, forms, elements, or widget components.
 
 Create your own folders additionally to your needs depending / based on project.
+
+#### Template variables
+##### Node
+- You can print $adapt_classes in a node template to get class with the viewmode. 
