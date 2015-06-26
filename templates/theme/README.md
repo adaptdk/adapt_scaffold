@@ -9,9 +9,9 @@
 #### Build/Compile sass to css
 
 ```bash
-  npm run watch
+npm run watch
 ``` 
-  Requirements: Node.js [[https://nodejs.org/]]
+Requirements: [Node.js](http://nodejs.org/)
   
 #### Template architecture
 
