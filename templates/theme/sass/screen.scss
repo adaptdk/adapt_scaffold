@@ -2,17 +2,20 @@
 
 // Base
 // ------------------------
-@import "base/normalize";     // Normalization across browsers
-@import "base/variables";     // Configurations
-@import "base/typography";    // Typography
-@import "base/utilities";     // Toolbelt, mixins
-@import "base/doc-elements";  // HTML elements.
+@import "base/normalize"; // Normalization across browsers
+@import "bourbon"; // Include bourbon
+@import "base/grid-settings"; // Grid settings for neat
+@import "neat"; // Include neat
+@import "base/variables"; // Configurations
+@import "base/typography"; // Typography
+@import "base/utilities"; // Toolbelt, mixins
+@import "base/doc-elements"; // HTML elements.
 
 // Layout
 // ------------------------
-@import "layout/header";      // Header layout
-@import "layout/footer";      // Footer layout
+@import "layout/header"; // Header layout
+@import "layout/footer"; // Footer layout
 
 // Modules
 // ------------------------
-@import "modules/forms";      // Forms
+@import "modules/forms"; // Forms
