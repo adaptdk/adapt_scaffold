@@ -1,26 +1,12 @@
 # Adapt basetheme
 
-[![forthebadge](http://forthebadge.com/images/badges/fuck-it-ship-it.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/reading-6th-grade-level.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/made-with-crayons.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-
-
-### About the frameworks
+### About the framework
 ___
 ###### Short about bourbon and neat
 - Bourbon is a mixin library for pre-defined and most common used mixins
 - Neat is a grid system for Bourbon.
 - Documentation and examples on bourbon: http://bourbon.io/
 - Documentation and examples on neat: http://neat.bourbon.io/
-
-###### Short about compass & singularity
-- Compass is an authoring framework
-- Singularity is a grid system for compass
-- Documentation and examples on compass:
-http://compass-style.org/help/
-- Documentation and examples on singularity
-https://github.com/at-import/Singularity/wiki
 
 #### Automated bash installing frameworks
 ___
@@ -53,21 +39,37 @@ neat install
 @import "bourbon/bourbon";
 @import "neat/neat";
 ```
+#### Gulp
+___
+You don't need to use gulp as your task runner this is just a basic default gulpfile. You can use grunt if you want. Install gulpjs follow the instructions from http://gulpjs.com/ for the latest.
 
-##### Manually install compass + singularity.
-steps for compass singularity
-1. First install compass and singularity gems
+Install the packages from the default gulpfile
 ```bash
-gem install compass singularity
+npm install
 ```
-2. Browse to your theme's root directory
+Run gulp watch by typing
 ```bash
-compass install compass --sass-dir "sass" --css-dir "css" --javascripts-dir "js" --images-dir "img"
+gulp watch
+```
+
+Run js lint on your javascript
+```bash
+gulp lint
+```
+
+Convert all SVG to pngs
+```bash
+gulp svg
 ```
 
 #### Gemfiles
 ___
-Description and how to use gemfiles.
+Bourbon and neat are commited with the template. They are only dependent on sass version
+
+Current versions are:
+Bourbon: 4.2.0
+Neat: 1.7.1
+Minimum requirements are: LibSass: 3.1 or Ruby sass: 3.4
 
 #### Architecture
 ___
