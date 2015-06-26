@@ -304,6 +304,7 @@ class CreateClientDirCommand extends BaseCommand
     mkdir($theme_path,0775,TRUE);
 
     $this->executeExternalCommand("cp -r $template_path/theme/* $theme_path", $output);
+    $this->executeExternalCommand("mv $theme_path/gitignore $theme_path/.gitignore", $output);
 
     file_put_contents("$theme_path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
     $this->executeExternalCommand("rm $theme_path/theme.info", $output);
