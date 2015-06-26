@@ -6,25 +6,13 @@
 - Documentation and examples on bourbon: http://bourbon.io/
 - Documentation and examples on neat: http://neat.bourbon.io/
 
-#### Installing bourbon and neat
+#### Build/Compile sass to css
 
-1. First install bourbon and neat gems
 ```bash
-gem install bourbon neat
-```
-2. Browse to your sass directory and type
-```bash
-bourbon install
-neat install
-```
-3. Create your main stylesheet and copy + paste.
-```scss
-@import "bourbon/bourbon";
-@import "neat/neat";
-```
-#### npm/task runner tools
-- coming -
-
+  npm run watch
+``` 
+  Requirements: Node.js [[https://nodejs.org/]]
+  
 #### Template architecture
 
 ##### Resets
