@@ -1,30 +1,13 @@
 # Adapt basetheme
 
-### About the framework
-___
-###### Short about bourbon and neat
+#### Short about bourbon and neat
 - Bourbon is a mixin library for pre-defined and most common used mixins
 - Neat is a grid system for Bourbon.
 - Documentation and examples on bourbon: http://bourbon.io/
 - Documentation and examples on neat: http://neat.bourbon.io/
 
-#### Automated bash installing frameworks
-___
-When initiating a new project you can pick from two frameworks.
-Bash script included will setup a Gemfile, pre-defined versions of framework selected with basic settings files.
+#### Installing bourbon and neat
 
-1. Type in terminal
-```bash
-./fe_setup.sh [bourbon or compass]
-```
-2. Remove fe_setup.sh after.
-
-#### Manually install
-___
-When manually installing frameworks like either a newer version of bourbon and neat, or compass and singularity
-
-##### Manually install bourbon + neat.
-Installing bourbon and neat manually.
 1. First install bourbon and neat gems
 ```bash
 gem install bourbon neat
@@ -39,40 +22,10 @@ neat install
 @import "bourbon/bourbon";
 @import "neat/neat";
 ```
-#### Gulp
-___
-You don't need to use gulp as your task runner this is just a basic default gulpfile. You can use grunt if you want. Install gulpjs follow the instructions from http://gulpjs.com/ for the latest.
+#### npm/task runner tools
+- coming -
 
-Install the packages from the default gulpfile
-```bash
-npm install
-```
-Run gulp watch by typing
-```bash
-gulp watch
-```
-
-Run js lint on your javascript
-```bash
-gulp lint
-```
-
-Convert all SVG to pngs
-```bash
-gulp svg
-```
-
-#### Gemfiles
-___
-Bourbon and neat are commited with the template. They are only dependent on sass version
-
-Current versions are:
-Bourbon: 4.2.0
-Neat: 1.7.1
-Minimum requirements are: LibSass: 3.1 or Ruby sass: 3.4
-
-#### Architecture
-___
+#### Template architecture
 
 ##### Resets
 Never use reset.css library or any wildcard * margin/padding resets, It's to aggressive and unpredictable. Use normalize.css which stabilises browser consistencies and quirks instead.
@@ -83,13 +36,11 @@ The preprocessor of choice is SCSS (Sassy SASS) and not SASS. SMACCS style so ou
 ##### Folder Architecture
 Folder structure is based on categorization of SMACCS, but also of roughly the most common scenarios. This gives a sense of logical organization for when working with Drupal.
 
-+ **base**
+###### base
 Variables, mixins, basic or most common single element selectors body, p, a, h1, h2, h3
-+ **layout**
+###### layout
 Larger regions of layout like header, footer, sidebars, reusable design patterns like column lists etc.
-+ **modules**
+###### modules
 Reusable elements like buttons, forms, elements, or widget components.
-+ **vendor**
-Contributed CSS libraries from either jquery plugins, or animations libraries
 
 Create your own folders additionally to your needs depending / based on project.
