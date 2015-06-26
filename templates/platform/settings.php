@@ -79,3 +79,5 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 # $conf['proxy_user_agent'] = '';
 # $conf['proxy_exceptions'] = array('127.0.0.1', 'localhost');
 # $conf['allow_authorize_operations'] = FALSE;
+
+$conf['syslog_identity'] = '{{ profile }}';
