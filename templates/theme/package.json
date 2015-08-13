@@ -1,6 +1,6 @@
 {
-  "name": "Adapt_frontend",
-  "version": "1.0.0",
+  "name": "Adapt_Frontend",
+  "version": "1.0.1",
   "description": "Build tool for adapt",
   "dependencies": {
     "node-sass":"*",
@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "watch": "node-sass -w --source-map true sass/ -o css/"
+    "watch": "./scss.sh"
   },
   "author": "adapt @ adapt.dk"
 }
+
