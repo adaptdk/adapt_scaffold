@@ -11,6 +11,13 @@
 ```bash
 npm run watch
 ``` 
+
+#### To update your local dependencies
+
+```bash
+npm update
+```
+
 Requirements: [Node.js](http://nodejs.org/)
   
 #### Template architecture
