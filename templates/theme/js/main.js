@@ -1,11 +1,9 @@
-
-// Javascript executed on every page load
-
 (function ($) {
-  Drupal.behaviors.main = {
-  attach: function(context, settings) {
-   
-    // Add javascript here
 
-  }};
+  Drupal.behaviors.UniqueName = {
+    attach: function (context, settings) {
+      // Logic
+    }
+  };
+
 })(jQuery);
