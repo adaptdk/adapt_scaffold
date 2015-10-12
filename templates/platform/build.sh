@@ -8,7 +8,7 @@ if pushd "htdocs/sites/all" > /dev/null; then
   popd > /dev/null;
 fi
 
-if pushd "htdocs/profiles/{{ profile }}/themes/custom/{{ profile }}_theme" > /dev/null; then
+if pushd "htdocs/profiles/{{ profile }}/themes/custom/{{ profile }}_theme/.npm/" > /dev/null; then
   npm install
   popd > /dev/null;
 fi
