@@ -2,7 +2,7 @@
 
 // Base
 // ------------------------
-@import "base/normalize";     // Normalization across browsers
+@import "../.npm/normalize.css/normalize.css"; // Normalization across browsers
 @import "base/variables";     // Configurations
 @import "base/typography";    // Typography
 @import "base/utilities";     // Toolbelt, mixins

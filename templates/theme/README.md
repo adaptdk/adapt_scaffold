@@ -9,12 +9,14 @@
 #### Build/Compile sass to css
 
 ```bash
+cd .npm
 npm run watch
 ``` 
 
 #### To update your local dependencies
 
 ```bash
+cd .npm
 npm update
 ```
 
