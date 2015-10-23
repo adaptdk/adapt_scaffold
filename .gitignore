@@ -1,20 +1,5 @@
-.idea
-vendor/
-
-# composer
 composer.lock
 composer.phar
-
-# osx
+vendor/
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-
-# npm
-.npm/node_modules
-node_modules
-
-# generated files
-templates/theme/css
+.idea
