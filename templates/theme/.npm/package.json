@@ -3,9 +3,10 @@
   "version": "1.0.1",
   "description": "Build tool for adapt",
   "dependencies": {
-    "node-sass":"*",
-    "node-neat":"*",
-    "node-bourbon":"*"
+    "node-bourbon": "*",
+    "node-neat": "*",
+    "node-sass": "*",
+    "normalize.css": "3.0.3"
   },
   "devDependencies": {},
   "scripts": {
@@ -13,4 +14,3 @@
   },
   "author": "adapt @ adapt.dk"
 }
-
