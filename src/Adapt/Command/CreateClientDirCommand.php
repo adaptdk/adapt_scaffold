@@ -307,6 +307,7 @@ class CreateClientDirCommand extends BaseCommand
     $this->executeExternalCommand("mv $theme_path/gitignore $theme_path/.gitignore", $output);
 
     file_put_contents("$theme_path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
+    file_put_contents("$theme_path/.npm/build-favicons.js", $this->twig->render("theme/.npm/build-favicons.js", $variables));
     $this->executeExternalCommand("rm $theme_path/theme.info", $output);
 
   }

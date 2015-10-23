@@ -12,13 +12,13 @@ try {
     developer: 'Adapt A/S',
     developerURL: 'http://adapt.eu/',
 
+    iconsPath: '/profiles/{{ profile }}/themes/custom/{{ profile }}_theme/images/icons/favicon/',
+
     // Everything below is project specific
     appName: null,           // `string`
     appDescription: null,    // `string`
     background: null,        // `string`
-    url: null,               // `string`
-    iconsPath: null          // `string`
-    // iconsPath: '/profiles/<PROFILE>/themes/custom/<THEME>/images/icons/favicon/'
+    url: null                // `string`
   });
 } catch (err) {
   log.info(
