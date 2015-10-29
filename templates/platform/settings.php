@@ -28,6 +28,14 @@ $conf['stage_file_proxy_origin'] = 'http://{{ domains.stage }}';
 $conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
 {% endif %}
 
+{% if prime.enabled == TRUE %}
+// Adapt monitoring settings. Used to serve site state to our monitoring platform.
+$conf['adapt_status_remote_endpoint'] = '{{ prime.tgt }}';
+$conf['adapt_status_shared_secret'] = '{{ prime.ss }}';
+$conf['adapt_status_enabled'] = 1;
+$conf['adapt_status_site_key'] = '{{ prime.key }}';
+{% endif %}
+
 // Disable the possibility to export menu links to features
 $conf['features_admin_show_component_menu_links'] = 0;
 // If you need to deploy menu links use either update hooks
@@ -71,3 +79,5 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 # $conf['proxy_user_agent'] = '';
 # $conf['proxy_exceptions'] = array('127.0.0.1', 'localhost');
 # $conf['allow_authorize_operations'] = FALSE;
+
+$conf['syslog_identity'] = '{{ profile }}';

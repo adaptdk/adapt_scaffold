@@ -1,0 +1,13 @@
+img {
+  vertical-align: bottom; // Images not align properly
+  -ms-interpolation-mode: bicubic; // Poor IE image rendering
+}
+
+// Fluid elements
+// ------------------------
+img, embed, object, video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}

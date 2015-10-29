@@ -1,6 +1,18 @@
+# osx
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+
+# sass
 .sass-cache/
+*.css.map
+
+# npm
+.npm/node_modules
+node_modules
+
+# runtime data
+pids
+*.pid

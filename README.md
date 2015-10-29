@@ -55,7 +55,7 @@ Check the platform repo out as ```CHECKOUT_FOLDER_NAME```.
 Notice: if your using the parrot vagrant box you should replace ```CHECKOUT_FOLDER_NAME``` with the dev domain of the project.
 
 ### Build
-First we build the htdocs folder so that we actually download drupal core and the initial profile including all contrib modules.
+First we build the htdocs folder so that we actually download drupal core and the initial profile including all contrib modules. This will also install npm modules in the theme folder.
 
     ./build.sh
 

@@ -221,7 +221,7 @@ class CreateClientDirCommand extends BaseCommand
       'adaptadminpass' => $variables['admin_password'],
     );
 
-    foreach (array('local', 'dev', 'test', 'live', 'prod') as $env) {
+    foreach (array('local', 'test', 'prod') as $env) {
       $settings = array(
         'profile' => $variables['profile'],
         'database' => "{$variables['name']}_{$env}",
@@ -230,6 +230,12 @@ class CreateClientDirCommand extends BaseCommand
         'hostname' => ($env == 'local' ? '127.0.0.1' : "{$name}.mysql.{$env}.cd.adapt.dk"),
         'env'      => $env,
         'domains' => $domains,
+        'prime' => array(
+          'tgt' => 'https://prime01/sitereporting/adapt_monitor/report',
+          'ss' => '',
+          'enabled' => ($env != 'loval') ? TRUE : FALSE,
+          'key' => "{$variables['name']}_{$env}",
+        ),
       );
 
       file_put_contents(
@@ -297,9 +303,11 @@ class CreateClientDirCommand extends BaseCommand
 
     mkdir($theme_path,0775,TRUE);
 
-    $this->executeExternalCommand("cp -r $template_path/theme/* $theme_path", $output);
+    $this->executeExternalCommand("cp -r $template_path/theme/ $theme_path", $output);
+    $this->executeExternalCommand("mv $theme_path/gitignore $theme_path/.gitignore", $output);
 
     file_put_contents("$theme_path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));
+    file_put_contents("$theme_path/.npm/build-favicons.js", $this->twig->render("theme/.npm/build-favicons.js", $variables));
     $this->executeExternalCommand("rm $theme_path/theme.info", $output);
 
   }
