@@ -2,11 +2,13 @@
  * Document body
  */
 body {
-  background-color: $base-background-color;
   color: $base-font-color;
 
   font-size: $base-font-size;
+
   line-height: $base-line-height;
+
+  background-color: $base-background-color;
 }
 
 /**
@@ -19,6 +21,7 @@ h4,
 h5,
 h6 {
   text-rendering: optimizeLegibility;
+
   line-height: $base-heading-line-height;
 }
 
