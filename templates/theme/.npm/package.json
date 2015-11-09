@@ -8,6 +8,7 @@
     "node-sass": "*",
     "normalize.css": "3.0.3",
     "npmlog": "1.2.1",
+    "stylelint": "2.1.0",
     "svg2favicons": "1.0.1"
   },
   "devDependencies": {},
@@ -15,6 +16,8 @@
     "build": "npm run build:css && npm run build:favicons",
     "build:css": "node-sass --include-path node_modules/bourbon/app/assets/stylesheets --include-path node_modules/bourbon-neat/app/assets/stylesheets --source-map true ../sass/ -o ../css",
     "build:favicons": "node build-favicons.js",
+    "lint": "npm run lint:css",
+    "lint:css": "stylelint -s scss --config ../sass/.stylelintrc ../sass/**/*.scss",
     "postinstall": "npm run build",
     "start": "npm run watch",
     "watch": "npm run build && npm run build:css -- -w"
