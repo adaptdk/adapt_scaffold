@@ -1,30 +1,36 @@
 @import "neat-helpers";
 
-// Example of a grid-settings file for use with neat
-// Load this file before you load neat, but after you load bourbon.
+/**
+ * Example of a grid-settings file for use with neat.
+ * Load this file before you load neat, but after you load bourbon.
+ */
 
-// Overrides
-// ------------------------
+/**
+ * Overrides
+ */
 $column: 80px;
 $gutter: 20px;
 $grid-columns: 12;
 $max-width: em(1180);
 
-// Visual grid
-// ------------------------
+/**
+ * Visual grid
+ */
 $visual-grid: false;
 $visual-grid-color: #eee;
 $visual-grid-index: back;
 $visual-grid-opacity: 0.4;
 
-// Breakpoints
-// ------------------------
+/**
+ * Breakpoints
+ */
 $small: em(640);
 $medium: em(860);
 $large: em(1200);
 
-// Media queries
-// ------------------------
+/**
+ * Media queries
+ */
 $small-up: new-breakpoint(min-width $small 12);
 $medium-up: new-breakpoint(min-width $medium 12);
 $large-up: new-breakpoint(min-width $large 12);
