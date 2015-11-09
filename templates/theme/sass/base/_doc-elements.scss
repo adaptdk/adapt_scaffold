@@ -50,8 +50,12 @@ h6 {
  * Anchor
  */
 a {
-  &:hover {}
+  &:hover {
+    /* Anchor hover effects. */
+  }
 
   &:active,
-  &:focus {}
+  &:focus {
+    /* Anchor focus effects. */
+  }
 }

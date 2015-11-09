@@ -3,10 +3,16 @@
  */
 form {
   .form-item {
-    label {}
+    label {
+      /* Form item labels. */
+    }
 
-    .form-text {}
+    .form-text {
+      /* Form item text. */
+    }
   }
 
-  .required {}
+  .required {
+    /* Required fields. */
+  }
 }
