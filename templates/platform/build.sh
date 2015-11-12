@@ -18,6 +18,6 @@ fi
 
 
 if pushd "htdocs/profiles/{{ profile }}/themes/custom/{{ profile }}_theme/.npm/" > /dev/null; then
-  npm install
+  npm install -q
   popd > /dev/null;
 fi
