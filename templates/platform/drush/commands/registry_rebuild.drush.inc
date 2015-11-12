@@ -53,7 +53,8 @@ function drush_registry_rebuild() {
   define('MAINTENANCE_MODE', 'update');
   ini_set('memory_limit', -1);
   if (!drush_bootstrap_to_phase(DRUSH_BOOTSTRAP_DRUPAL_DATABASE)) {
-    return drush_set_error('DRUPAL_SITE_NOT_FOUND', dt('You need to specify an alias or run this command within a drupal site.'));
+    return drush_set_error('DRUPAL_SITE_NOT_FOUND',
+      dt('You need to specify an alias or run this command within a drupal site.'));
   }
   $include_dir = DRUPAL_ROOT . '/includes';
   $module_dir = DRUPAL_ROOT . '/modules';
@@ -70,7 +71,8 @@ function drush_registry_rebuild() {
     $include_dir . '/schema.inc',
     $include_dir . '/actions.inc',
     $include_dir . '/entity.inc',
-    $module_dir  . '/system/system.module',
+    $module_dir . '/system/system.module',
+    $include_dir . '/database/database.inc',
     $include_dir . '/database/query.inc',
     $include_dir . '/database/select.inc',
     $include_dir . '/registry.inc',
@@ -83,7 +85,7 @@ function drush_registry_rebuild() {
   if (drush_drupal_major_version() == 7) {
     $cache_lock_path_absolute = variable_get('lock_inc');
     if (!empty($cache_lock_path_absolute)) {
-      $cache_lock_path_relative = DRUPAL_ROOT . '/'. variable_get('lock_inc');
+      $cache_lock_path_relative = DRUPAL_ROOT . '/' . variable_get('lock_inc');
       // Ensure that the configured lock.inc really exists at that location and
       // is accessible. Otherwise we use the core lock.inc as fallback.
       if (is_readable($cache_lock_path_relative) && is_file($cache_lock_path_relative)) {
@@ -212,27 +214,23 @@ function drush_registry_rebuild() {
       }
     }
     if (!empty($filenames)) {
-      db_delete('registry_file')
-        ->condition('filename', $filenames)
-        ->execute();
-      db_delete('registry')
-        ->condition('filename', $filenames)
-        ->execute();
+      db_delete('registry_file')->condition('filename', $filenames)->execute();
+      db_delete('registry')->condition('filename', $filenames)->execute();
       $dt_args = array(
         '@files' => implode(', ', $filenames),
       );
       $singular = 'Manually deleted 1 stale file from the registry.';
-      $plural   = 'Manually deleted @count stale files from the registry.';
+      $plural = 'Manually deleted @count stale files from the registry.';
       drush_log(format_plural(count($filenames), $singular, $plural), 'success');
       $singular = "A file has been declared in a module's .info, but could not be found. This is probably indicative of a bug. The missing file is @files.";
-      $plural   = "@count files were declared in a module's .info, but could not be found. This is probably indicative of a bug. The missing files are @files.";
+      $plural = "@count files were declared in a module's .info, but could not be found. This is probably indicative of a bug. The missing files are @files.";
       drush_log(format_plural(count($filenames), $singular, $plural, $dt_args), 'warning');
     }
     $parsed_after = registry_get_parsed_files();
     $message = 'There were @parsed_before files in the registry before and @parsed_after files now.';
     $dt_args = array(
       '@parsed_before' => count($parsed_before),
-      '@parsed_after'  => count($parsed_after),
+      '@parsed_after' => count($parsed_after),
     );
     drush_log(dt($message, $dt_args));
     drush_registry_rebuild_cc_all();
@@ -257,6 +255,7 @@ function drush_registry_rebuild() {
  * by default in the PHP script variant.
  */
 function drush_registry_rebuild_cc_all() {
+  module_invoke_all('pre_flush_all_caches');
   if (!drush_get_option('no-cache-clear') || $force_all_cache_clear) {
     if (function_exists('cache_clear_all') || drush_drupal_major_version() < 8) {
       cache_clear_all('*', 'cache', TRUE);

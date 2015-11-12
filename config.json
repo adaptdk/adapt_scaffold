@@ -1,13 +1,13 @@
 {
   "git" : {
-    "remote" : "git@githost:/data/git/drupal",
+    "remote" : "git@githost.adapt.dk:/data/git/drupal",
     "local"  : "/tmp/git"
   },
   "domains" : {
-    "local_prefix" : "loc.",
-    "local_suffix" : "",
+    "local_prefix" : "",
+    "local_suffix" : ".loc",
     "stage_prefix" : "",
-    "stage_suffix" : ".fe.test.cd.adapt.dk"
+    "stage_suffix" : ".c1.test.adapt.dk"
   },
   "modules" : {
     "default" : {

@@ -79,10 +79,8 @@ class CreateClientDirCommand extends BaseCommand
 
     $platform_path = "$tmp_path/platform";
     $profile_path = "$tmp_path/profile";
-    //$theme_path = "$profile_path/themes/custom/";
 
     $projects = array();
-    $dependencies = array();
 
     $fetcher = new HTTPReleaseFetcher();
 
@@ -139,7 +137,7 @@ class CreateClientDirCommand extends BaseCommand
     $this->executeExternalCommand("rm -fr $tmp_path", $output);
 
     $output->writeln(
-      "<info>Succeeded, now make a local clone: git clone ${gituri}/${name}/platform.git $name </info>"
+      "<info>Succeeded, now make a local clone: git clone ${gituri}/${name}/platform.git $name</info>"
     );
   }
 
@@ -170,8 +168,8 @@ class CreateClientDirCommand extends BaseCommand
     $domain = $variables['domain'];
     $name = $variables['name'];
     $domains = array(
-      'live' => $domain,
-      'stage' => $config->domains->stage_prefix . $name . $config->domains->stage_suffix,
+      'prod' => $domain,
+      'test' => $config->domains->test_prefix . $name . $config->domains->test_suffix,
       'local' => $config->domains->local_prefix . $domain . $config->domains->local_suffix,
     );
 
@@ -179,12 +177,12 @@ class CreateClientDirCommand extends BaseCommand
       'name' => $name,
       'domain' => $domains,
       'htdocs' => array(
-        'live' => "/home/drupal/{$name}.live/site/htdocs",
-        'stage' => "/home/drupal/{$name}.stage/site/htdocs",
+        'prod' => "/virtual/www/{$name}/site/htdocs",
+        'test' => "/virtual/www/{$name}/site/htdocs",
       ),
       'ssh-host' => array(
-        'live' => "",
-        'stage' => "local.salvia",
+        'prod' => "",
+        'test' => "deploy.c1.test.adapt.dk",
       )
     );
 
@@ -227,13 +225,13 @@ class CreateClientDirCommand extends BaseCommand
         'database' => "{$variables['name']}_{$env}",
         'username' => ($env == 'local' ? 'root' : "{$variables['name']}_{$env}"),
         'password' => ($env == 'local' ? 'root' : $this->generate_password()),
-        'hostname' => ($env == 'local' ? '127.0.0.1' : "{$name}.mysql.{$env}.cd.adapt.dk"),
+        'hostname' => ($env == 'local' ? '127.0.0.1' : "db01"),
         'env'      => $env,
         'domains' => $domains,
         'prime' => array(
           'tgt' => 'https://prime01/sitereporting/adapt_monitor/report',
           'ss' => '',
-          'enabled' => ($env != 'loval') ? TRUE : FALSE,
+          'enabled' => ($env != 'local') ? TRUE : FALSE,
           'key' => "{$variables['name']}_{$env}",
         ),
       );
@@ -283,7 +281,7 @@ class CreateClientDirCommand extends BaseCommand
     file_put_contents("$path/$profile.install", $this->twig->render('profile/profile.install', $variables));
     file_put_contents("$path/$profile.info", $this->twig->render('profile/profile.info', $variables));
     file_put_contents("$path/$profile.make", $this->twig->render('profile/profile.make', $variables));
-  
+
   }
 
   /**
@@ -303,7 +301,9 @@ class CreateClientDirCommand extends BaseCommand
 
     mkdir($theme_path,0775,TRUE);
 
-    $this->executeExternalCommand("cp -r $template_path/theme/ $theme_path", $output);
+    $this->executeExternalCommand("cp -r $template_path/theme/. $theme_path", $output);
+    echo 'moving gitignore into place';
+    $output->writeln("Looing for " . $theme_path . '/gitignore');
     $this->executeExternalCommand("mv $theme_path/gitignore $theme_path/.gitignore", $output);
 
     file_put_contents("$theme_path/{$profile}_theme.info", $this->twig->render("theme/theme.info", $variables));

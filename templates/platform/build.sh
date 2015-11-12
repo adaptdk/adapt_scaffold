@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 drush situs-build --root=htdocs --make-file=./platform.make --git-check --git-check-ignore-regex=/global/,/contrib/,/libraries/
 
 if pushd "htdocs/sites/all" > /dev/null; then
@@ -7,6 +8,14 @@ if pushd "htdocs/sites/all" > /dev/null; then
   fi
   popd > /dev/null;
 fi
+
+if pushd "htdocs/profiles/loberen" > /dev/null; then
+  if [ -f "composer.json" ]; then
+    composer install --ignore-platform-reqs
+  fi
+  popd > /dev/null;
+fi
+
 
 if pushd "htdocs/profiles/{{ profile }}/themes/custom/{{ profile }}_theme/.npm/" > /dev/null; then
   npm install

@@ -10,6 +10,11 @@ $databases['default']['default'] = array(
   'prefix' => '',
 );
 
+$conf['current_environment'] = '{{ env }}';
+
+// Define temporary files directory
+$conf['file_temporary_path'] = 'sites/default/files/tmp';
+
 {% if env == 'live' or env == 'prod' or env == 'test' %}
 // Preproccesing of js/css
 $conf['preprocess_css'] = 1;
@@ -38,7 +43,7 @@ $conf['adapt_status_site_key'] = '{{ prime.key }}';
 
 // Disable the possibility to export menu links to features
 $conf['features_admin_show_component_menu_links'] = 0;
-// If you need to deploy menu links use either update hooks
+// If you need to deploy menu links use either update hooks,
 // deploy or defaultconfig.
 
 $update_free_access = FALSE;
@@ -81,3 +86,24 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 # $conf['allow_authorize_operations'] = FALSE;
 
 $conf['syslog_identity'] = '{{ profile }}';
+
+// Make memcache the default memcache backend.
+$memcache_backend = 'profiles/{{ profile }}/modules/contrib/memcache/memcache.inc';
+if (file_exists($memcache_backend)) {
+  $conf['cache_backends'][] = $memcache_backend;
+  $conf['cache_default_class'] = 'MemCacheDrupal';
+
+  # cache_form should always use a non-volatile caching engine.
+  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+
+  $conf['memcache_bins'] = array('cache' => 'default');
+
+  $conf['memcache_persistent'] = TRUE;
+  $conf['memcache_key_prefix'] = '{{ profile }}';
+  {% if env == 'live' or env == 'prod' or env == 'test' %}
+  $conf['memcache_servers'] = array('mc01:11211' => 'default');
+  {% else %}
+  $conf['memcache_servers'] = array('127.0.0.1:11211' => 'default');
+  {% endif %}
+}
+

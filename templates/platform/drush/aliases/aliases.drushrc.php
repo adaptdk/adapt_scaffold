@@ -16,7 +16,7 @@ $aliases['loc'] = array(
   'remote-host' => 'default',
 );
 
-$aliases['stage'] = array(
+$aliases['test'] = array(
   'uri' => '{{ domain.stage }}',
   'root' => '{{ htdocs.stage }}',
   'remote-host' => '{{ ssh-host.stage }}',
