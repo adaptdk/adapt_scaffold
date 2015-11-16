@@ -9,7 +9,7 @@ if pushd "htdocs/sites/all" > /dev/null; then
   popd > /dev/null;
 fi
 
-if pushd "htdocs/profiles/loberen" > /dev/null; then
+if pushd "htdocs/profiles/{{ profile }}" > /dev/null; then
   if [ -f "composer.json" ]; then
     composer install --ignore-platform-reqs
   fi
