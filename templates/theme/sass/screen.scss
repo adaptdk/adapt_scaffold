@@ -2,7 +2,7 @@
 
 // Base
 // ------------------------
-@import "../.npm/normalize.css/normalize.css"; // Normalization across browsers
+@import "../.npm/node_modules/normalize.css/normalize.css"; // Normalization across browsers
 @import "bourbon"; // Include bourbon
 @import "base/grid-settings"; // Grid settings for neat
 @import "neat"; // Include neat
