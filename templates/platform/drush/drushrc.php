@@ -200,6 +200,7 @@ $options['enable-modules'] = array(
   'field_ui',
   'devel',
   'devel_generate',
+  'stage_file_proxy',
 );
 
 /**
