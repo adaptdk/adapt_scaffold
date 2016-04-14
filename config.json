@@ -7,7 +7,14 @@
     "local_prefix" : "",
     "local_suffix" : ".loc",
     "stage_prefix" : "",
-    "stage_suffix" : ".c1.test.adapt.dk"
+    "stage_suffix" : ".c1.test.adapt.dk",
+    "test_prefix" : "",
+    "test_suffix" : ".c1.test.adapt.dk"
+  },
+  "prime" : {
+    "prod": "http://prime.adapt.dk",
+    "test": "http://prime",
+    "local": "http://localhost"
   },
   "modules" : {
     "default" : {

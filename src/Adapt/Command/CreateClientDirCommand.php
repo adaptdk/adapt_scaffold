@@ -211,8 +211,8 @@ class CreateClientDirCommand extends BaseCommand
     }
 
     mkdir($path . '/settings');
-
-    $config = array(
+    $prime = $config->prime;
+    $configs = array(
       'clientdir'  => $variables['profile'],
       'domain' => $domain,
       'cronkey'    => $variables['cron_key'],
@@ -229,7 +229,7 @@ class CreateClientDirCommand extends BaseCommand
         'env'      => $env,
         'domains' => $domains,
         'prime' => array(
-          'tgt' => 'https://prime01/sitereporting/adapt_monitor/report',
+          'tgt' => $config->prime->{$env} . "/sitereporting/adapt_monitor/report",
           'ss' => '',
           'enabled' => ($env != 'local') ? TRUE : FALSE,
           'key' => "{$variables['name']}_{$env}",
@@ -245,13 +245,13 @@ class CreateClientDirCommand extends BaseCommand
           file_put_contents("$path/local_setup.sh", $this->twig->render('platform/local_setup.sh', $settings));
           $this->executeExternalCommand("chmod +x $path/local_setup.sh", $output);
       } else {
-        $config["mysqlpass{$env}"] = $settings['password'];
-        $config["htaccesspass{$env}"] = $this->generate_password('', 10);
+        $configs["mysqlpass{$env}"] = $settings['password'];
+        $configs["htaccesspass{$env}"] = $this->generate_password('', 10);
       }
     }
 
     // Write config file used to setup apache/cron stuff.
-    file_put_contents("$path/settings/config", $this->twig->render('platform/config', $config));
+    file_put_contents("$path/settings/config", $this->twig->render('platform/config', $configs));
 
   }
 
