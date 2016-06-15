@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-php github_status.php
+php includes/github_status.php
 if [ $? -eq 1 ];
 then
   echo "Aborting build process because of Github problems. Follow process here: https://status.github.com"
