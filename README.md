@@ -49,7 +49,7 @@ Notice: naming of client-dir should follow naming principles described in at htt
 ## Checkout of your new project/clientdir/repositories
 Check the platform repo out as ```CHECKOUT_FOLDER_NAME```.
 
-    git clone file:///tmp/git/<client-dir>_platform.git CHECKOUT_FOLDER_NAME
+    git clone file:///tmp/git/<client-dir>/platform.git CHECKOUT_FOLDER_NAME
     cd CHECKOUT_FOLDER_NAME
     
 Notice: if your using the parrot vagrant box you should replace ```CHECKOUT_FOLDER_NAME``` with the dev domain of the project.
