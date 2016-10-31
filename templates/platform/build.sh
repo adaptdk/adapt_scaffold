@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+
+php includes/github_status.php
+if [ $? -eq 1 ];
+then
+  echo "Aborting build process because of Github problems. Follow process here: https://status.github.com"
+  exit 1;
+fi
+
 drush situs-build --root=htdocs --make-file=./platform.make --git-check --git-check-ignore-regex=/global/,/contrib/,/libraries/
 
 if pushd "htdocs/sites/all" > /dev/null; then

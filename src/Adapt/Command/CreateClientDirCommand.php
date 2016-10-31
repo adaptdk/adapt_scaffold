@@ -190,6 +190,8 @@ class CreateClientDirCommand extends BaseCommand
     file_put_contents("$path/.gitignore", $this->twig->render('platform/gitignore'));
     file_put_contents("$path/platform.make", $this->twig->render('platform/platform.make', $variables));
     file_put_contents("$path/build.sh", $this->twig->render('platform/build.sh', $variables));
+    mkdir("$path/includes");
+    file_put_contents("$path/includes/github_status.php", $this->twig->render('platform/includes/github_status.php'));
     $this->executeExternalCommand("chmod +x $path/build.sh", $output);
     file_put_contents("$path/install.sh", $this->twig->render('platform/install.sh', $variables));
     $this->executeExternalCommand("chmod +x $path/install.sh", $output);
